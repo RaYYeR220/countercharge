@@ -11,9 +11,11 @@ can monkeypatch :func:`countercharge_agent.models.build_model` and inject fakes 
 from __future__ import annotations
 
 import os
+from dataclasses import dataclass
 from typing import Any, Callable
 
 from strands import Agent, tool
+from strands.models.model import Model
 
 from countercharge_engine.models import Bill, EOB
 
@@ -64,6 +66,61 @@ def _pil_to_png(bitmap) -> bytes:
     return buffer.getvalue()
 
 
+@dataclass
+class ExtractionResult:
+    """One vision-extractor call's parsed output plus its token usage.
+
+    Shared by the ``intake_extractor`` tool below and by the extraction eval
+    (``countercharge_evals.run_extraction``), so both paths run the exact same
+    model call, prompt and structured-output schema -- the eval is not a
+    reimplementation of the extractor, it *is* the extractor.
+    """
+
+    document: Bill | EOB
+    payload: dict[str, Any]
+    usage: dict[str, int]
+    stop_reason: str
+
+
+def extract_document(
+    pages: list[bytes],
+    kind: str,
+    *,
+    image_format: str = "png",
+    model: Model | None = None,
+) -> ExtractionResult:
+    """Run the vision extractor over already-decoded image pages for one bill/EOB document.
+
+    ``pages`` are raw image bytes (one entry per page, already decoded from a PDF or a
+    plain image); ``kind`` is ``"bill"`` or ``"eob"``. Pass ``model`` to reuse a caller-built
+    model (e.g. in tests or to force a specific role/provider); defaults to
+    ``models.build_model(role="vision")``.
+    """
+    output_model = Bill if kind == "bill" else EOB
+    extractor = Agent(
+        model=model or models.build_model(role="vision"),
+        system_prompt=INTAKE_EXTRACTOR_SYSTEM_PROMPT,
+        structured_output_model=output_model,
+        callback_handler=None,
+    )
+    content: list[dict[str, Any]] = [{"text": f"Extract this {kind} exactly as printed."}]
+    for page_bytes in pages:
+        content.append({"image": {"format": image_format, "source": {"bytes": page_bytes}}})
+
+    result = extractor([{"role": "user", "content": content}])
+    extracted = result.structured_output
+    if extracted is None:
+        raise ValueError(f"intake extraction of {kind} produced no structured output")
+
+    usage = dict(result.metrics.accumulated_usage) if result.metrics is not None else {}
+    return ExtractionResult(
+        document=extracted,
+        payload=extracted.model_dump(mode="json"),
+        usage=usage,
+        stop_reason=result.stop_reason,
+    )
+
+
 def make_intake_extractor(
     *,
     gateway_caller: GatewayCaller,
@@ -85,32 +142,16 @@ def make_intake_extractor(
             pages = [raw_bytes]
             image_format = _image_format(media_type)
 
-        output_model = Bill if kind == "bill" else EOB
-        extractor = Agent(
-            model=models.build_model(role="vision"),
-            system_prompt=INTAKE_EXTRACTOR_SYSTEM_PROMPT,
-            structured_output_model=output_model,
-            callback_handler=None,
-        )
-        content: list[dict[str, Any]] = [{"text": f"Extract this {kind} exactly as printed."}]
-        for page_bytes in pages:
-            content.append({"image": {"format": image_format, "source": {"bytes": page_bytes}}})
-
-        result = extractor([{"role": "user", "content": content}])
-        extracted = result.structured_output
-        if extracted is None:
-            raise ValueError(f"intake extraction of {kind} produced no structured output")
-
-        payload = extracted.model_dump(mode="json")
+        extracted = extract_document(pages, kind, image_format=image_format)
         saved = call_gateway_tool(
             gateway_caller,
             "case___save_extraction",
             case_id=case_id,
             kind=kind,
-            payload=payload,
+            payload=extracted.payload,
             confidence=0.9,
         )
-        return {"doc_id": (saved or {}).get("doc_id"), "extracted": payload}
+        return {"doc_id": (saved or {}).get("doc_id"), "extracted": extracted.payload}
 
     return intake_extractor
 
