@@ -4,7 +4,7 @@ A patient-advocate agent that audits US hospital bills against Medicare's own pu
 rulebooks, finds what's overcharged or eligible for charity care, and only acts on the
 outside world through three independent, fail-closed gates.
 
-**Live demo:** https://rayyer220.github.io/countercharge/ · [Trust Center](https://rayyer220.github.io/countercharge/trust.html) · [Architecture](docs/ARCHITECTURE.md) · [Claims ledger](docs/CLAIMS.md)
+**Demo video:** https://youtu.be/dia0cTQl0Uo · **Live demo:** https://rayyer220.github.io/countercharge/ · [Trust Center](https://rayyer220.github.io/countercharge/trust.html) · [Architecture](docs/ARCHITECTURE.md) · [Claims ledger](docs/CLAIMS.md)
 
 ## The problem
 
