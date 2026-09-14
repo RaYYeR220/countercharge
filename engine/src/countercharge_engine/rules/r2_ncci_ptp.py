@@ -58,7 +58,11 @@ def check(ctx: AuditContext) -> list[Finding]:
                     dataset,
                     {"col1": col1_line.code, "col2": col2_line.code},
                 ),
-                evidence={"modifier_ind": edit.modifier_ind, "rationale": edit.rationale},
+                evidence={
+                    "modifier_ind": edit.modifier_ind,
+                    "rationale": edit.rationale,
+                    "target_key": col2_line.line_id,
+                },
             )
             findings.append(with_id(finding))
     return findings

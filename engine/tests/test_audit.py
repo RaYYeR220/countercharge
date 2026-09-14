@@ -11,12 +11,14 @@ import sqlite3
 from datetime import date
 from pathlib import Path
 
-from countercharge_engine.audit import RULES, audit
+from countercharge_engine.audit import RULES, _disputable_cents, audit
 from countercharge_engine.models import (
     Bill,
+    Citation,
     CodeType,
     EOB,
     FapTier,
+    Finding,
     Household,
     LineItem,
     Provider,
@@ -295,12 +297,161 @@ def test_dedupe_same_line_hit_by_duplicate_and_cash_price_counts_once_at_max():
     assert len(by_rule["CASH_PRICE"]) == 2
     assert {f.amount_cents for f in by_rule["CASH_PRICE"]} == {40000}
 
-    # disputable_cents: DUPLICATE's line_ids=[l1, l2] join l1 and l2 into one
-    # component; both CASH_PRICE findings (on l1 and on l2 respectively) fall
-    # in that same component. The component contributes only its largest
-    # amount -- max(90000, 40000, 40000) = 90000 -- not the sum of all three
-    # (90000 + 40000 + 40000 = 170000).
-    assert report.disputable_cents == 90000
+    # disputable_cents: target keys are l2 (DUPLICATE's copy, and one of the
+    # two CASH_PRICE findings) and l1 (the other CASH_PRICE finding). l2's
+    # key takes the max of the two findings that share it -- max(90000,
+    # 40000) = 90000 -- while l1's CASH_PRICE finding is a distinct, actually
+    # disputed line and is not folded into l2's component just because
+    # DUPLICATE's finding also happens to reference l1 as the "original":
+    # 90000 (l2) + 40000 (l1) = 130000.
+    assert report.disputable_cents == 130000
+
+
+# --- Dedupe: target-key regression cases ------------------------------------
+
+
+def test_dedupe_triple_duplicate_counts_each_extra_copy():
+    # Reviewer's repro: the same line billed three times must count both
+    # extra copies, not collapse to a single copy's amount.
+    dos = date(2026, 3, 1)
+    lines = [
+        LineItem(
+            line_id=f"l{i}", dos=dos, code="99213", code_type=CodeType.CPT, units=1, charge_cents=10000
+        )
+        for i in (1, 2, 3)
+    ]
+    bill = Bill(
+        provider=Provider(name="Test Hospital"),
+        account_no="D2",
+        statement_date=dos,
+        setting=Setting.OUTPATIENT,
+        lines=lines,
+        totals=Totals(charges_cents=30000, patient_balance_cents=30000),
+    )
+
+    report = audit(bill, refdata=MemoryRefData())
+
+    assert len(report.findings) == 2
+    assert all(f.rule_id == "DUPLICATE" for f in report.findings)
+
+    # Two extra copies at 10000c each -- 20000c ($200) is individually proven
+    # by the engine's own two findings, not the 10000c a naive shared-line
+    # dedup would collapse them to.
+    assert report.disputable_cents == 20000
+
+
+def test_dedupe_ncci_ptp_and_duplicate_sharing_same_target_line():
+    # l2 and l3 are identical copies of the same code, both bundled (as
+    # NCCI's column-2 line) into l1's code. l3 is doubly implicated: it's
+    # the NCCI_PTP finding's target *and* the DUPLICATE finding's target.
+    # That shared key must be deduped to its max, not summed; l2's own,
+    # unshared NCCI_PTP finding must still be counted in full.
+    dos = date(2026, 3, 1)
+    lines = [
+        LineItem(line_id="l1", dos=dos, code="99285", code_type=CodeType.CPT, units=1, charge_cents=50000),
+        LineItem(line_id="l2", dos=dos, code="36415", code_type=CodeType.CPT, units=1, charge_cents=1500),
+        LineItem(line_id="l3", dos=dos, code="36415", code_type=CodeType.CPT, units=1, charge_cents=1500),
+    ]
+    bill = Bill(
+        provider=Provider(name="Test Hospital"),
+        account_no="D3",
+        statement_date=dos,
+        setting=Setting.ER,
+        lines=lines,
+        totals=Totals(charges_cents=53000, patient_balance_cents=53000),
+    )
+    refdata = MemoryRefData(
+        ptp_opps=[
+            PtpEdit(
+                col1="99285",
+                col2="36415",
+                modifier_ind=0,
+                effective=date(2026, 1, 1),
+                deleted=None,
+                rationale="standards of medical/surgical practice",
+            )
+        ],
+        infos={
+            "NCCI-PTP-OPPS": DatasetInfo(
+                dataset="NCCI-PTP-OPPS", version="2026Q4 v323r0", url="https://cms.gov/ncci"
+            )
+        },
+    )
+
+    report = audit(bill, refdata=refdata)
+
+    by_rule: dict[str, list] = {}
+    for finding in report.findings:
+        by_rule.setdefault(finding.rule_id, []).append(finding)
+
+    # NCCI_PTP fires once for (l1, l2) and once for (l1, l3), 1500c each.
+    assert len(by_rule["NCCI_PTP"]) == 2
+    # DUPLICATE fires once: l2 is the original, l3 the copy, 1500c.
+    assert len(by_rule["DUPLICATE"]) == 1
+
+    # l2's NCCI_PTP finding (1500) is unshared -> counted in full. l3's
+    # NCCI_PTP finding and its DUPLICATE finding share target_key=l3 (both
+    # 1500) -> deduped to max(1500, 1500) = 1500, not summed to 3000.
+    # Total: 1500 (l2) + 1500 (l3, deduped) = 3000.
+    assert report.disputable_cents == 3000
+
+
+def _mue_group_finding(amount: int, line_ids: list[str], mai: int = 3) -> Finding:
+    code, dos = "96374", "2026-03-01"
+    return Finding(
+        rule_id="MUE",
+        disputable=True,
+        line_ids=line_ids,
+        amount_cents=amount,
+        title="Units exceed Medicare's per-day limit",
+        detail="",
+        citation=Citation(dataset="NCCI-MUE-OPPS", version="v", url="", record={}),
+        evidence={"mai": mai, "target_key": f"{code}|{dos}"},
+    )
+
+
+def _line_finding(rule_id: str, line_id: str, amount: int) -> Finding:
+    return Finding(
+        rule_id=rule_id,
+        disputable=True,
+        line_ids=[line_id],
+        amount_cents=amount,
+        title="",
+        detail="",
+        citation=Citation(dataset="HPT-nyp", version="v", url="", record={}),
+        evidence={"target_key": line_id},
+    )
+
+
+def test_dedupe_mue_group_overlap_uses_group_amount_when_larger():
+    # l1 is inside the MUE group *and* is CASH_PRICE's own target -- the
+    # group's contribution is max(group amount, sum of the overlapping
+    # line-key amounts inside the group), here the group amount wins.
+    findings = [
+        _mue_group_finding(amount=20000, line_ids=["l1"]),
+        _line_finding("CASH_PRICE", "l1", amount=3000),
+    ]
+
+    assert _disputable_cents(findings, patient_balance_cents=100000) == 20000
+
+
+def test_dedupe_mue_group_overlap_uses_line_amounts_sum_when_larger():
+    # Two lines in the same MUE group each separately over-charged on their
+    # own cash-price terms; the sum of those two line-key amounts (16000)
+    # exceeds the group's own amount (10000), so it wins instead.
+    findings = [
+        _mue_group_finding(amount=10000, line_ids=["l1", "l2"]),
+        _line_finding("CASH_PRICE", "l1", amount=8000),
+        _line_finding("CASH_PRICE", "l2", amount=8000),
+    ]
+
+    assert _disputable_cents(findings, patient_balance_cents=100000) == 16000
+
+
+def test_dedupe_mue_group_with_no_overlap_counts_group_amount_once():
+    findings = [_mue_group_finding(amount=20000, line_ids=["l1", "l2"])]
+
+    assert _disputable_cents(findings, patient_balance_cents=100000) == 20000
 
 
 # --- Determinism ------------------------------------------------------------

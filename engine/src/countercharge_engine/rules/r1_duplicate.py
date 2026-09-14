@@ -49,7 +49,7 @@ def check(ctx: AuditContext) -> list[Finding]:
                         "charge_cents": charge_cents,
                     },
                 ),
-                evidence={},
+                evidence={"target_key": copy.line_id},
             )
             findings.append(with_id(finding))
     return findings

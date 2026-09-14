@@ -56,22 +56,77 @@ _BALANCE_LEVEL_RULE_IDS = frozenset(
 )
 
 
+def _is_mue_group_finding(finding: Finding) -> bool:
+    """True for an MAI 2/3 grouped MUE finding, whose target is a
+    ``"{code}|{dos}"`` key standing in for every line in the group -- as
+    opposed to an MAI 1 MUE finding, whose target is a single line id like
+    any other line-level rule's."""
+    return finding.rule_id == r3_mue.RULE_ID and finding.evidence.get("mai") in (2, 3)
+
+
+def _line_level_sum(findings: list[Finding]) -> int:
+    """Sum disputable line-level findings, deduplicated by ``evidence
+    ["target_key"]``: the single bill line (or, for a grouped MAI 2/3 MUE
+    finding, the ``"{code}|{dos}"`` group) each finding proves an overcharge
+    against. Two findings that name the same target key contribute only the
+    larger of their two amounts; findings with different target keys are
+    independently proven overcharges and are summed in full.
+
+    An MUE group key and a plain line key can legitimately overlap on the
+    same lines (e.g. a line that's both part of an MAI 2/3 MUE group and
+    separately over its hospital's cash price). Summing both in full would
+    double-count part of the same dollars, but simply taking the group's own
+    amount could under-count a group whose lines are individually proven to
+    be overcharged by more than the MUE excess alone. So for each MUE group,
+    if any of its lines is also the target of another finding, the group
+    contributes ``max(group amount, sum of those overlapping line-key
+    amounts)`` instead, and those overlapping line keys are excluded from
+    the plain per-key sum (they've already been accounted for by the group).
+    """
+    group_findings = [f for f in findings if _is_mue_group_finding(f)]
+    other_findings = [f for f in findings if not _is_mue_group_finding(f)]
+
+    other_max_by_key: dict[str, int] = {}
+    for finding in other_findings:
+        key = finding.evidence.get("target_key")
+        if key is None:
+            continue
+        other_max_by_key[key] = max(other_max_by_key.get(key, 0), finding.amount_cents)
+
+    consumed_keys: set[str] = set()
+    group_total = 0
+    for finding in group_findings:
+        overlapping = [other_max_by_key[lid] for lid in finding.line_ids if lid in other_max_by_key]
+        group_total += max(finding.amount_cents, sum(overlapping)) if overlapping else finding.amount_cents
+        consumed_keys.update(lid for lid in finding.line_ids if lid in other_max_by_key)
+
+    other_total = sum(amount for key, amount in other_max_by_key.items() if key not in consumed_keys)
+    return other_total + group_total
+
+
 def _disputable_cents(findings: list[Finding], patient_balance_cents: int) -> int:
     """Roll disputable findings into a single deduplicated dollar total.
 
     Line-level findings often overlap: the same line can be claimed by more
     than one rule (e.g. a duplicated line that's also above the hospital's
-    cash price). To avoid double-counting the same dollars, line-level
-    findings are merged by *connected component* over their ``line_ids``
-    (union-find): any two findings that share at least one line id join the
-    same component, and each component contributes only its single largest
-    ``amount_cents`` to the total -- not the sum of every finding that
-    touched it.
+    cash price). To avoid double-counting the same dollars, each line-level
+    finding records the specific target its amount is proven against in
+    ``evidence["target_key"]`` (the duplicate copy's line id, the NCCI PTP
+    column-2 line id, the MUE MAI-1 line id, the MUE MAI-2/3 group's
+    ``"{code}|{dos}"`` key, or the cash-price line id), and ``_line_level_sum``
+    sums those findings deduplicated by that key rather than by any line id
+    the finding happens to mention (see its docstring for the MUE-group
+    overlap case). This fixes the previous connected-component (union-find)
+    approach, which merged findings by *any* shared line id -- including a
+    line that's merely a *reference* (e.g. a duplicate group's "original"
+    line) rather than the one actually proven overcharged -- and so could
+    collapse multiple genuinely distinct overcharges on the same physical
+    line into a single amount.
 
     Balance-level findings are about the bill's totals as a whole rather
-    than any particular line, so they can't be merged the same way; instead
-    only the single largest balance-level amount is counted, since they are
-    different ways of describing the same overbilled balance.
+    than any particular line, so they can't be deduplicated the same way;
+    instead only the single largest balance-level amount is counted, since
+    they are different ways of describing the same overbilled balance.
 
     The final total is ``line_level_sum + balance_level_max``, capped at the
     bill's reported patient balance whenever that balance is positive (a
@@ -82,34 +137,7 @@ def _disputable_cents(findings: list[Finding], patient_balance_cents: int) -> in
     line_level = [f for f in findings if f.disputable and f.rule_id in _LINE_LEVEL_RULE_IDS]
     balance_level = [f for f in findings if f.disputable and f.rule_id in _BALANCE_LEVEL_RULE_IDS]
 
-    parent: dict[str, str] = {}
-
-    def find(line_id: str) -> str:
-        parent.setdefault(line_id, line_id)
-        root = line_id
-        while parent[root] != root:
-            root = parent[root]
-        while parent[line_id] != root:
-            parent[line_id], line_id = root, parent[line_id]
-        return root
-
-    def union(a: str, b: str) -> None:
-        root_a, root_b = find(a), find(b)
-        if root_a != root_b:
-            parent[root_a] = root_b
-
-    for finding in line_level:
-        for line_id in finding.line_ids[1:]:
-            union(finding.line_ids[0], line_id)
-
-    component_max: dict[str, int] = {}
-    for finding in line_level:
-        if not finding.line_ids:
-            continue
-        root = find(finding.line_ids[0])
-        component_max[root] = max(component_max.get(root, 0), finding.amount_cents)
-
-    line_level_sum = sum(component_max.values())
+    line_level_sum = _line_level_sum(line_level)
     balance_level_max = max((f.amount_cents for f in balance_level), default=0)
 
     if patient_balance_cents > 0:

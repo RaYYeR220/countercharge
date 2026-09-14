@@ -46,7 +46,11 @@ def check(ctx: AuditContext) -> list[Finding]:
                 datasets.hpt_dataset(hospital_id),
                 {"code": line.code, "cash_cents": price.cash_cents},
             ),
-            evidence={"cash_cents": price.cash_cents, "units": line.units},
+            evidence={
+                "cash_cents": price.cash_cents,
+                "units": line.units,
+                "target_key": line.line_id,
+            },
         )
         findings.append(with_id(finding))
     return findings
