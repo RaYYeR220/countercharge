@@ -1,0 +1,79 @@
+[
+  {
+    "dataset": "NCCI-PTP-PRAC",
+    "version": "2026Q4 v323r0",
+    "url": "https://www.cms.gov/medicare/coding-billing/national-correct-coding-initiative-ncci-edits/medicare-ncci-procedure-procedure-ptp-edits",
+    "rows": "1762040",
+    "retrieved": "2026-09-14"
+  },
+  {
+    "dataset": "NCCI-PTP-OPPS",
+    "version": "2026Q4 v323r0",
+    "url": "https://www.cms.gov/medicare/coding-billing/national-correct-coding-initiative-ncci-edits/medicare-ncci-procedure-procedure-ptp-edits",
+    "rows": "1429512",
+    "retrieved": "2026-09-14"
+  },
+  {
+    "dataset": "NCCI-MUE-PRAC",
+    "version": "2026Q4 eff. 2026-10-01",
+    "url": "https://www.cms.gov/medicare/coding-billing/national-correct-coding-initiative-ncci-edits/medicare-ncci-medically-unlikely-edits-mues",
+    "rows": "15212",
+    "retrieved": "2026-09-14"
+  },
+  {
+    "dataset": "NCCI-MUE-OPPS",
+    "version": "2026Q4 eff. 2026-10-01",
+    "url": "https://www.cms.gov/medicare/coding-billing/national-correct-coding-initiative-ncci-edits/medicare-ncci-medically-unlikely-edits-mues",
+    "rows": "15162",
+    "retrieved": "2026-09-14"
+  },
+  {
+    "dataset": "NCCI-MUE-DME",
+    "version": "2026Q4 eff. 2026-10-01",
+    "url": "https://www.cms.gov/medicare/coding-billing/national-correct-coding-initiative-ncci-edits/medicare-ncci-medically-unlikely-edits-mues",
+    "rows": "3109",
+    "retrieved": "2026-09-14"
+  },
+  {
+    "dataset": "PFS-RVU",
+    "version": "RVU26B eff. 2026-05-01",
+    "url": "https://www.cms.gov/medicare/payment/fee-schedules/physician/pfs-relative-value-files/rvu26b",
+    "rows": "15784",
+    "retrieved": "2026-09-14"
+  },
+  {
+    "dataset": "HCPCS2",
+    "version": "2026 October quarterly update",
+    "url": "https://www.cms.gov/medicare/coding-billing/healthcare-common-procedure-system/quarterly-update",
+    "rows": "7448",
+    "retrieved": "2026-09-14"
+  },
+  {
+    "dataset": "FPL",
+    "version": "2026 HHS Poverty Guidelines",
+    "url": "https://aspe.hhs.gov/sites/default/files/documents/b1bfa16b20ae9b89d525bc35de7c1643/detailed-guidelines-2026.pdf",
+    "rows": "3",
+    "retrieved": "2026-09-14"
+  },
+  {
+    "dataset": "HPT-nyp",
+    "version": "NewYork-Presbyterian standardcharges.json v3.0.0 (last_updated_on 2026-03-31)",
+    "url": "https://www.nyp.org/patients-visitors/paying-for-care/hospital-price-transparency/standard-charges",
+    "rows": "58",
+    "retrieved": "2026-09-14"
+  },
+  {
+    "dataset": "FAP-nyp",
+    "version": "policy retrieved 2026-09-14",
+    "url": "https://www.nyp.org/billing/charity-care",
+    "rows": "1",
+    "retrieved": "2026-09-14"
+  },
+  {
+    "dataset": "FAP-ccf",
+    "version": "policy retrieved 2026-09-14",
+    "url": "https://my.clevelandclinic.org/-/scassets/files/org/patients-visitors/billing/financial-assistance/7-financial-assistance-program-policy.pdf",
+    "rows": "1",
+    "retrieved": "2026-09-14"
+  }
+]

@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Trust center — Countercharge</title>
+<meta name="description" content="The Cedar policies, deny matrix, engine scorecard and reference-data versions behind every Countercharge finding." />
+<link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+
+<header class="top">
+  <a class="mark" href="index.html"><span class="dot"></span>Countercharge</a>
+  <nav class="top-links">
+    <a href="index.html">Home</a>
+    <a href="case.html">Audit a case</a>
+    <a href="trust.html" aria-current="page">Trust center</a>
+  </nav>
+</header>
+
+<main>
+  <div class="hero" style="padding-bottom:20px;">
+    <h1 class="headline" style="min-height:auto;">Trust center</h1>
+    <p class="lede">Every gate that stands between a finding and an outbound letter, in the open: the authorization policies, what they deny and why, the engine's own scorecard, and the exact reference-data versions behind every citation.</p>
+  </div>
+
+  <section class="trust-section">
+    <div class="wrap">
+      <h2 class="section-title">Cedar authorization policies</h2>
+      <p style="color:var(--ink-soft);font-size:14px;">Rendered for gateway <span class="mono" id="gateway-arn">—</span> (a placeholder ARN for this demo). Source: <span class="mono">policies/src/countercharge_policies/templates/*.cedar.tmpl</span>.</p>
+      <div id="policy-blocks"></div>
+    </div>
+  </section>
+
+  <section class="trust-section">
+    <div class="wrap">
+      <h2 class="section-title">Deny matrix</h2>
+      <p style="color:var(--ink-soft);font-size:14px;">Each row is a scenario the gateway is built to refuse, and which layer catches it.</p>
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead><tr><th>Scenario</th><th>Layer</th><th>Result</th><th>Why</th></tr></thead>
+          <tbody id="deny-matrix-body"></tbody>
+        </table>
+      </div>
+
+      <h3 style="font-family:'Courier Prime',monospace;font-size:13px;margin-top:26px;">A real denial, verbatim</h3>
+      <p style="color:var(--ink-soft);font-size:13.5px;">The literal response returned by the live AgentCore Gateway when a tool call has no policy statement permitting it (denied by default):</p>
+      <pre class="json-block">{"jsonrpc":"2.0","error":{"code":-32002,"message":"Tool Execution Denied: Tool call not allowed due to policy enforcement [No policy applies to the request (denied by default).]"}}</pre>
+    </div>
+  </section>
+
+  <section class="trust-section">
+    <div class="wrap">
+      <h2 class="section-title">Engine scorecard</h2>
+      <p style="color:var(--ink-soft);font-size:14px;" id="scorecard-summary">loading…</p>
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead><tr><th>Rule</th><th>TP</th><th>FP</th><th>FN</th><th>Precision</th><th>Recall</th></tr></thead>
+          <tbody id="scorecard-body"></tbody>
+        </table>
+      </div>
+      <p class="mono" style="font-size:11px;color:var(--ink-soft);margin-top:10px;">Source: evals/results/engine-scorecard.json, run against 45 corpus cases.</p>
+    </div>
+  </section>
+
+  <section class="trust-section">
+    <div class="wrap">
+      <h2 class="section-title">Reference data versions</h2>
+      <p style="color:var(--ink-soft);font-size:14px;">Every citation in a finding names one of these datasets, at this exact version.</p>
+      <div class="table-scroll">
+        <table class="data-table">
+          <thead><tr><th>Dataset</th><th>Version</th><th>Rows</th><th>Retrieved</th><th>Source</th></tr></thead>
+          <tbody id="refdata-body"></tbody>
+        </table>
+      </div>
+      <p class="mono" style="font-size:11px;color:var(--ink-soft);margin-top:10px;">Source: engine/data/REFDATA.md.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  Countercharge — a claims desk for patient advocates.
+</footer>
+
+<script src="js/common.js"></script>
+<script src="js/trust.js"></script>
+</body>
+</html>

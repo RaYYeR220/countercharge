@@ -1,0 +1,567 @@
+[
+  {
+    "type": "tool_start",
+    "tool": "engine___audit_case",
+    "tool_use_id": "toolu_01WcjpowayLjbdMecVu3hixj",
+    "input": {
+      "case_id": "duplicate_01"
+    }
+  },
+  {
+    "type": "tool_end",
+    "tool": "engine___audit_case",
+    "tool_use_id": "toolu_01WcjpowayLjbdMecVu3hixj",
+    "status": "success",
+    "output": {
+      "report": {
+        "findings": [
+          {
+            "finding_id": "f1",
+            "rule_id": "DUPLICATE",
+            "disputable": true,
+            "line_ids": [
+              "L2",
+              "L3"
+            ],
+            "amount_cents": 14500,
+            "title": "Duplicate lab charge",
+            "detail": "Line L3 duplicates the complete blood count already billed on L2.",
+            "citation": {
+              "dataset": "engine",
+              "version": "smoke-1",
+              "url": "https://example.org/duplicate",
+              "record": {}
+            },
+            "evidence": {
+              "target_key": "L3"
+            }
+          }
+        ],
+        "advisory": [],
+        "disputable_cents": 14500,
+        "fap": null,
+        "refdata_version": "smoke-1"
+      },
+      "signed": [
+        {
+          "finding_id": "f1",
+          "signature": "sig1"
+        }
+      ]
+    }
+  },
+  {
+    "type": "finding",
+    "finding": {
+      "finding_id": "f1",
+      "rule_id": "DUPLICATE",
+      "disputable": true,
+      "line_ids": [
+        "L2",
+        "L3"
+      ],
+      "amount_cents": 14500,
+      "title": "Duplicate lab charge",
+      "detail": "Line L3 duplicates the complete blood count already billed on L2.",
+      "citation": {
+        "dataset": "engine",
+        "version": "smoke-1",
+        "url": "https://example.org/duplicate",
+        "record": {}
+      },
+      "evidence": {
+        "target_key": "L3"
+      }
+    }
+  },
+  {
+    "type": "text",
+    "delta": "Here"
+  },
+  {
+    "type": "text",
+    "delta": "'s what the"
+  },
+  {
+    "type": "text",
+    "delta": " audit found on"
+  },
+  {
+    "type": "text",
+    "delta": " case duplicate_01:"
+  },
+  {
+    "type": "text",
+    "delta": "\n\n**"
+  },
+  {
+    "type": "text",
+    "delta": "Dis"
+  },
+  {
+    "type": "text",
+    "delta": "putable finding:"
+  },
+  {
+    "type": "text",
+    "delta": "**\n- **Duplic"
+  },
+  {
+    "type": "text",
+    "delta": "ate lab charge \u2014"
+  },
+  {
+    "type": "text",
+    "delta": " $145"
+  },
+  {
+    "type": "text",
+    "delta": ".00**:"
+  },
+  {
+    "type": "text",
+    "delta": " The b"
+  },
+  {
+    "type": "text",
+    "delta": "ill char"
+  },
+  {
+    "type": "text",
+    "delta": "ges tw"
+  },
+  {
+    "type": "text",
+    "delta": "ice for the same complete blood"
+  },
+  {
+    "type": "text",
+    "delta": " count (CBC)"
+  },
+  {
+    "type": "text",
+    "delta": " lab test \u2014"
+  },
+  {
+    "type": "text",
+    "delta": " once"
+  },
+  {
+    "type": "text",
+    "delta": " on line L2 "
+  },
+  {
+    "type": "text",
+    "delta": "and again on line L3."
+  },
+  {
+    "type": "text",
+    "delta": " Since it"
+  },
+  {
+    "type": "text",
+    "delta": "'s the same test, that"
+  },
+  {
+    "type": "text",
+    "delta": " second charge sh"
+  },
+  {
+    "type": "text",
+    "delta": "ouldn't be there"
+  },
+  {
+    "type": "text",
+    "delta": "."
+  },
+  {
+    "type": "text",
+    "delta": "\n\nThat's the only disputable"
+  },
+  {
+    "type": "text",
+    "delta": " iss"
+  },
+  {
+    "type": "text",
+    "delta": "ue \u2014 no"
+  },
+  {
+    "type": "text",
+    "delta": " financ"
+  },
+  {
+    "type": "text",
+    "delta": "ial-assistance fl"
+  },
+  {
+    "type": "text",
+    "delta": "ags or other"
+  },
+  {
+    "type": "text",
+    "delta": " advisory items"
+  },
+  {
+    "type": "text",
+    "delta": " came up this time"
+  },
+  {
+    "type": "text",
+    "delta": ".\n\nAs inst"
+  },
+  {
+    "type": "text",
+    "delta": "ructed, I'll draft"
+  },
+  {
+    "type": "text",
+    "delta": " and send a dispute letter"
+  },
+  {
+    "type": "text",
+    "delta": " for this fin"
+  },
+  {
+    "type": "text",
+    "delta": "ding to"
+  },
+  {
+    "type": "text",
+    "delta": " billing@nyp.org"
+  },
+  {
+    "type": "text",
+    "delta": " now"
+  },
+  {
+    "type": "text",
+    "delta": "."
+  },
+  {
+    "type": "tool_start",
+    "tool": "case___draft_action",
+    "tool_use_id": "toolu_01RQycfZJCogjHMggYjvRGaZ",
+    "input": {
+      "case_id": "duplicate_01",
+      "type": "dispute_letter",
+      "recipient_email": "billing@nyp.org",
+      "finding_ids": [
+        "f1"
+      ],
+      "letter_markdown": "## Dispute of Duplicate Charge \u2014 Case duplicate_01\n\nTo the Billing Department at NYP,\n\nI am writing to dispute a duplicate charge on my recent bill.\n\n**Finding: Duplicate Lab Charge \u2014 $145.00**\nLine item L3 duplicates the complete blood count (CBC) already billed under line item L2. I am requesting that the duplicate charge (L3, $145.00) be removed from my account and my balance be corrected accordingly.\n\nPlease review and confirm the correction in writing.\n\nThank you,\nThe Patient",
+      "disputed_amount_cents": 14500
+    }
+  },
+  {
+    "type": "tool_end",
+    "tool": "case___draft_action",
+    "tool_use_id": "toolu_01RQycfZJCogjHMggYjvRGaZ",
+    "status": "success",
+    "output": {
+      "action_id": "action_1",
+      "tool": "actions___send_dispute_letter",
+      "tool_input": {
+        "case_id": "duplicate_01",
+        "action_id": "action_1",
+        "recipient_email": "billing@nyp.org",
+        "finding_ids": [
+          "f1"
+        ],
+        "disputed_amount_cents": 14500
+      },
+      "input_hash": "smoke-hash",
+      "grounding": {
+        "ok": true,
+        "unsupported_amounts": [],
+        "unsupported_codes": []
+      }
+    }
+  },
+  {
+    "type": "tool_start",
+    "tool": "actions___send_dispute_letter",
+    "tool_use_id": "toolu_013n4tHHufQy89gvFTQYzwRK",
+    "input": {
+      "case_id": "duplicate_01",
+      "action_id": "action_1",
+      "recipient_email": "billing@nyp.org",
+      "finding_ids": [
+        "f1"
+      ],
+      "disputed_amount_cents": 14500
+    }
+  },
+  {
+    "type": "interrupt",
+    "interrupt_id": "v1:before_tool_call:toolu_013n4tHHufQy89gvFTQYzwRK:bcdff54d-8cd7-534e-8b64-898c90104e1b",
+    "name": "approval_required",
+    "action": {
+      "action_id": "action_1",
+      "tool": "actions___send_dispute_letter",
+      "tool_input": {
+        "case_id": "duplicate_01",
+        "action_id": "action_1",
+        "recipient_email": "billing@nyp.org",
+        "finding_ids": [
+          "f1"
+        ],
+        "disputed_amount_cents": 14500
+      },
+      "preview_markdown": "## Dispute of Duplicate Charge \u2014 Case duplicate_01\n\nTo the Billing Department at NYP,\n\nI am writing to dispute a duplicate charge on my recent bill.\n\n**Finding: Duplicate Lab Charge \u2014 $145.00**\nLine item L3 duplicates the complete blood count (CBC) already billed under line item L2. I am requesting that the duplicate charge (L3, $145.00) be removed from my account and my balance be corrected accordingly.\n\nPlease review and confirm the correction in writing.\n\nThank you,\nThe Patient"
+    }
+  },
+  {
+    "type": "done",
+    "stop_reason": "interrupt"
+  },
+  {
+    "type": "tool_start",
+    "tool": "actions___send_dispute_letter",
+    "tool_use_id": "toolu_013n4tHHufQy89gvFTQYzwRK",
+    "input": {
+      "case_id": "duplicate_01",
+      "action_id": "action_1",
+      "recipient_email": "billing@nyp.org",
+      "finding_ids": [
+        "f1"
+      ],
+      "disputed_amount_cents": 14500
+    }
+  },
+  {
+    "type": "tool_end",
+    "tool": "actions___send_dispute_letter",
+    "tool_use_id": "toolu_013n4tHHufQy89gvFTQYzwRK",
+    "status": "success",
+    "output": {
+      "status": "sent",
+      "message_id": "msg_smoke_1",
+      "action_id": "action_1"
+    }
+  },
+  {
+    "type": "text",
+    "delta": "The"
+  },
+  {
+    "type": "text",
+    "delta": " dispute letter has been s"
+  },
+  {
+    "type": "text",
+    "delta": "ent to billing@nyp"
+  },
+  {
+    "type": "text",
+    "delta": ".org disputing the **"
+  },
+  {
+    "type": "text",
+    "delta": "$145.00 duplic"
+  },
+  {
+    "type": "text",
+    "delta": "ate lab charge**"
+  },
+  {
+    "type": "text",
+    "delta": " (the rep"
+  },
+  {
+    "type": "text",
+    "delta": "eated CBC test"
+  },
+  {
+    "type": "text",
+    "delta": " on"
+  },
+  {
+    "type": "text",
+    "delta": " line L3"
+  },
+  {
+    "type": "text",
+    "delta": ").\n\nQuick summary of"
+  },
+  {
+    "type": "text",
+    "delta": " where"
+  },
+  {
+    "type": "text",
+    "delta": " things stand:\n- **"
+  },
+  {
+    "type": "text",
+    "delta": "Sent:"
+  },
+  {
+    "type": "text",
+    "delta": "** Dispute letter for"
+  },
+  {
+    "type": "text",
+    "delta": " the"
+  },
+  {
+    "type": "text",
+    "delta": " duplicate $"
+  },
+  {
+    "type": "text",
+    "delta": "145.00 charge \u2014 message"
+  },
+  {
+    "type": "text",
+    "delta": " ID `"
+  },
+  {
+    "type": "text",
+    "delta": "msg_smoke_1"
+  },
+  {
+    "type": "text",
+    "delta": "`."
+  },
+  {
+    "type": "text",
+    "delta": "\n- **No other"
+  },
+  {
+    "type": "text",
+    "delta": " find"
+  },
+  {
+    "type": "text",
+    "delta": "ings** to"
+  },
+  {
+    "type": "text",
+    "delta": " wor"
+  },
+  {
+    "type": "text",
+    "delta": "ry about \u2014"
+  },
+  {
+    "type": "text",
+    "delta": " no financial-"
+  },
+  {
+    "type": "text",
+    "delta": "assistance e"
+  },
+  {
+    "type": "text",
+    "delta": "ligibility or it"
+  },
+  {
+    "type": "text",
+    "delta": "emized-b"
+  },
+  {
+    "type": "text",
+    "delta": "ill iss"
+  },
+  {
+    "type": "text",
+    "delta": "ues showed up in"
+  },
+  {
+    "type": "text",
+    "delta": " this audit.\n\nI"
+  },
+  {
+    "type": "text",
+    "delta": "'ll keep an eye out"
+  },
+  {
+    "type": "text",
+    "delta": " for the h"
+  },
+  {
+    "type": "text",
+    "delta": "ospital's response"
+  },
+  {
+    "type": "text",
+    "delta": "."
+  },
+  {
+    "type": "text",
+    "delta": " If"
+  },
+  {
+    "type": "text",
+    "delta": " they don't corre"
+  },
+  {
+    "type": "text",
+    "delta": "ct the bal"
+  },
+  {
+    "type": "text",
+    "delta": "ance or re"
+  },
+  {
+    "type": "text",
+    "delta": "ply within"
+  },
+  {
+    "type": "text",
+    "delta": " a cou"
+  },
+  {
+    "type": "text",
+    "delta": "ple of weeks, let me"
+  },
+  {
+    "type": "text",
+    "delta": " know and we can esc"
+  },
+  {
+    "type": "text",
+    "delta": "alate ("
+  },
+  {
+    "type": "text",
+    "delta": "for"
+  },
+  {
+    "type": "text",
+    "delta": " example, to"
+  },
+  {
+    "type": "text",
+    "delta": " a regulator"
+  },
+  {
+    "type": "text",
+    "delta": " or with"
+  },
+  {
+    "type": "text",
+    "delta": " a"
+  },
+  {
+    "type": "text",
+    "delta": " fir"
+  },
+  {
+    "type": "text",
+    "delta": "m"
+  },
+  {
+    "type": "text",
+    "delta": "er foll"
+  },
+  {
+    "type": "text",
+    "delta": "ow-up letter)."
+  },
+  {
+    "type": "done",
+    "stop_reason": "end_turn"
+  }
+]
