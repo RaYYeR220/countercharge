@@ -2,16 +2,19 @@
 name = "countercharge-evals"
 version = "0.1.0"
 description = "Pre-registered evaluation corpus, renderer and engine scorecard for the Countercharge audit engine"
-requires-python = ">=3.11"
+requires-python = ">=3.12"
 dependencies = [
     "countercharge-engine",
+    "countercharge-agent",
     "pydantic>=2.8",
     "jinja2>=3.1",
     "playwright>=1.45",
 ]
 
 [tool.uv.sources]
-countercharge-engine = { path = "../engine" }
+countercharge-engine = { path = "../engine", editable = true }
+countercharge-agent = { path = "../agent", editable = true }
+countercharge-core = { path = "../core", editable = true }
 
 [dependency-groups]
 dev = [
