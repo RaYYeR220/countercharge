@@ -1,0 +1,54 @@
+{
+  "hospital_name": "Sample Test Hospital",
+  "last_updated_on": "2026-03-31",
+  "version": "3.0.0",
+  "standard_charge_information": [
+    {
+      "description": "HEART TRANSPLANT",
+      "code_information": [{"code": "1", "type": "MS-DRG"}],
+      "standard_charges": [
+        {"setting": "inpatient", "minimum": 251298.25, "maximum": 2250992.88}
+      ]
+    },
+    {
+      "description": "HC LAB BLOOD COUNT COMPLETE AUTO W/AUTO DIFF WBC",
+      "code_information": [{"code": "85025", "type": "CPT"}],
+      "standard_charges": [
+        {
+          "setting": "outpatient",
+          "gross_charge": 113,
+          "discounted_cash": 113,
+          "minimum": 5.44,
+          "maximum": 354.6
+        }
+      ]
+    },
+    {
+      "description": "HC ER CHARGE LEVEL V",
+      "code_information": [{"code": "99285", "type": "CPT"}],
+      "standard_charges": [
+        {
+          "setting": "inpatient",
+          "gross_charge": 9000,
+          "discounted_cash": 8000,
+          "minimum": 500,
+          "maximum": 12000
+        },
+        {
+          "setting": "outpatient",
+          "gross_charge": 5990,
+          "discounted_cash": 5990,
+          "minimum": 395,
+          "maximum": 12720.32
+        }
+      ]
+    },
+    {
+      "description": "NOT A CODE OF INTEREST",
+      "code_information": [{"code": "99999", "type": "CPT"}],
+      "standard_charges": [
+        {"setting": "outpatient", "gross_charge": 1, "discounted_cash": 1, "minimum": 1, "maximum": 1}
+      ]
+    }
+  ]
+}

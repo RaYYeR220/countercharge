@@ -1,0 +1,83 @@
+# Codes of interest for the hospital price-transparency (MRF) ingest.
+# One CPT/HCPCS code per line. Common ER, imaging, lab, E&M and infusion
+# codes plus a handful of drug J-codes -- the set a typical ER/outpatient
+# bill audit needs prices for. Comment lines start with "#".
+
+# Emergency department E&M levels
+99281
+99282
+99283
+99284
+99285
+
+# Office/outpatient E&M, new and established patients
+99202
+99203
+99204
+99205
+99211
+99212
+99213
+99214
+99215
+
+# Imaging
+70450
+71045
+71046
+71047
+71048
+72125
+74176
+74177
+74178
+73610
+76705
+
+# Lab
+80048
+80053
+85025
+81001
+84484
+
+# Cardiology
+93005
+
+# Hydration / infusion / injection administration
+96360
+96361
+96365
+96366
+96367
+96368
+96369
+96370
+96371
+96372
+96373
+96374
+96375
+96376
+
+# Drug J-codes
+J1885
+J2405
+J7030
+J7050
+J1100
+J0696
+
+# Venipuncture
+36415
+
+# Wound repair (simple)
+12001
+12002
+12004
+12005
+12006
+12007
+
+# Splint/strapping
+29125

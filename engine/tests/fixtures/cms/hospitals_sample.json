@@ -1,0 +1,24 @@
+[
+  {
+    "hospital_id": "test1",
+    "name": "Test Hospital One",
+    "nonprofit": true,
+    "billing_email_domain": "test1.example",
+    "free_max_fpl": 200,
+    "discount_max_fpl": 400,
+    "agb_pct": null,
+    "source_url": "https://test1.example/fap.pdf",
+    "retrieved": "2026-01-15"
+  },
+  {
+    "hospital_id": "test2",
+    "name": "Test Hospital Two",
+    "nonprofit": false,
+    "billing_email_domain": "test2.example",
+    "free_max_fpl": null,
+    "discount_max_fpl": null,
+    "agb_pct": null,
+    "source_url": "https://test2.example/fap.pdf",
+    "retrieved": "2026-02-01"
+  }
+]

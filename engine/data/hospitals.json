@@ -1,0 +1,26 @@
+[
+  {
+    "hospital_id": "nyp",
+    "name": "NewYork-Presbyterian Hospital",
+    "nonprofit": true,
+    "billing_email_domain": "nyp.org",
+    "free_max_fpl": null,
+    "discount_max_fpl": null,
+    "agb_pct": null,
+    "source_url": "https://www.nyp.org/billing/charity-care",
+    "retrieved": "2026-09-14",
+    "note": "Financial Aid Policy PDF is served from a Widen DAM asset-share page (nyp.acquiadam.com) that requires client-side JS to resolve a download link; the plain-text thresholds could not be confirmed from the public HTML. Left null rather than guessed."
+  },
+  {
+    "hospital_id": "ccf",
+    "name": "Cleveland Clinic",
+    "nonprofit": true,
+    "billing_email_domain": "clevelandclinic.org",
+    "free_max_fpl": 250,
+    "discount_max_fpl": 400,
+    "agb_pct": null,
+    "source_url": "https://my.clevelandclinic.org/-/scassets/files/org/patients-visitors/billing/financial-assistance/7-financial-assistance-program-policy.pdf",
+    "retrieved": "2026-09-14",
+    "note": "Financial Assistance Policy, Rev. 1/1/26, section VII: <=250% FPG is free care; 251-400% FPG is discounted to the IRC 501(r)(5) 'amount generally billed' (AGB). The policy defines AGB by a lookback-ratio method in Appendix A, which is not included in this 8-page document, so no single AGB percentage is stated; agb_pct left null rather than guessed."
+  }
+]

@@ -1,0 +1,10 @@
+CPT only copyright 2025 American Medical Association.  All rights reserved.
+Column1/Column2 Edits
+Column 1	Column 2	*=in existence	Effective	Deletion	Modifier	PTP Edit Rationale
+		prior to 1996	Date	Date	0=not allowed
+			*=no data	1=allowed
+				9=not applicable
+99285	71046		20220101	*	1	CPT Manual or CMS manual coding instruction
+36415	85025		20220101	*	0	Standard preparation/monitoring services
+99213	99214		20180101	20200101	9	Mutually exclusive procedures
+99202	36415		20140101	20231231	1	CPT Manual or CMS manual coding instruction
