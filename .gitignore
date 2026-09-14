@@ -29,3 +29,12 @@ cdk.out/
 engine/data/raw/
 *.sqlite
 .DS_Store
+
+# agentcore local state
+agentcore/aws-targets.json
+agentcore/.cli/
+agentcore/.llm-context/
+agentcore/.env.local
+agentcore/cdk/dist/
+agentcore/cdk/node_modules/
+agentcore/cdk/cdk.out/
