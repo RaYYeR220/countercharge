@@ -1,0 +1,23 @@
+{
+  "provider": {"name": "NYP", "nonprofit": true, "hospital_id": "nyp"},
+  "account_no": "A3",
+  "statement_date": "2026-03-15",
+  "setting": "OUTPATIENT",
+  "self_pay": true,
+  "lines": [
+    {
+      "line_id": "l1",
+      "dos": "2026-03-15",
+      "code": "99213",
+      "code_type": "CPT",
+      "units": 1,
+      "charge_cents": 90000
+    }
+  ],
+  "totals": {
+    "charges_cents": 90000,
+    "adjustments_cents": 0,
+    "payments_cents": 0,
+    "patient_balance_cents": 90000
+  }
+}

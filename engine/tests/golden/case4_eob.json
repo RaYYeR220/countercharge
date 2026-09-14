@@ -1,0 +1,8 @@
+{
+  "payer": "Acme Health",
+  "claim_no": "C1",
+  "network": "OUT",
+  "emergency": true,
+  "lines": [],
+  "total_patient_resp_cents": 20000
+}

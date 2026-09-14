@@ -1,0 +1,54 @@
+{
+  "provider": {"name": "Test Hospital"},
+  "account_no": "A2",
+  "statement_date": "2026-03-15",
+  "setting": "ER",
+  "lines": [
+    {
+      "line_id": "l1",
+      "dos": "2026-03-15",
+      "code": "85025",
+      "code_type": "CPT",
+      "units": 1,
+      "charge_cents": 3000
+    },
+    {
+      "line_id": "l2",
+      "dos": "2026-03-15",
+      "code": "85025",
+      "code_type": "CPT",
+      "units": 1,
+      "charge_cents": 3000
+    },
+    {
+      "line_id": "l3",
+      "dos": "2026-03-15",
+      "code": "99285",
+      "code_type": "CPT",
+      "units": 1,
+      "charge_cents": 80000
+    },
+    {
+      "line_id": "l4",
+      "dos": "2026-03-15",
+      "code": "36415",
+      "code_type": "CPT",
+      "units": 1,
+      "charge_cents": 1500
+    },
+    {
+      "line_id": "l5",
+      "dos": "2026-03-15",
+      "code": "96374",
+      "code_type": "CPT",
+      "units": 3,
+      "charge_cents": 30000
+    }
+  ],
+  "totals": {
+    "charges_cents": 117500,
+    "adjustments_cents": 0,
+    "payments_cents": 0,
+    "patient_balance_cents": 117500
+  }
+}
