@@ -1,6 +1,10 @@
+from datetime import date
 from typing import Any, AsyncIterable
 
+import pytest
 from strands.models.model import Model
+
+from countercharge_engine.models import Bill, Provider, Setting, Totals
 
 from countercharge_agent import subagents
 from countercharge_agent.subagents import _image_format, make_charity_researcher, make_letter_writer
@@ -135,3 +139,94 @@ def test_make_charity_researcher_does_not_import_playwright_until_invoked():
     # Building the tool must never touch Playwright/strands_tools.browser.
     charity_researcher = make_charity_researcher()
     assert callable(charity_researcher)
+
+
+class _FakeMetrics:
+    def __init__(self, usage: dict):
+        self.accumulated_usage = usage
+
+
+class _FakeAgentResult:
+    def __init__(self, structured_output, usage: dict, stop_reason: str = "end_turn"):
+        self.structured_output = structured_output
+        self.metrics = _FakeMetrics(usage)
+        self.stop_reason = stop_reason
+
+
+def _sample_bill() -> Bill:
+    return Bill(
+        provider=Provider(name="Test Hospital"),
+        account_no="ACC1",
+        statement_date=date(2026, 1, 1),
+        setting=Setting.ER,
+        lines=[],
+        totals=Totals(charges_cents=100, patient_balance_cents=100),
+    )
+
+
+def test_extract_document_returns_payload_and_token_usage(monkeypatch):
+    bill = _sample_bill()
+    captured: dict[str, Any] = {}
+
+    class _FakeExtractorAgent:
+        def __init__(self, **kwargs):
+            captured["init"] = kwargs
+
+        def __call__(self, messages):
+            captured["messages"] = messages
+            return _FakeAgentResult(bill, {"inputTokens": 10, "outputTokens": 5, "totalTokens": 15})
+
+    monkeypatch.setattr(subagents, "Agent", _FakeExtractorAgent)
+    monkeypatch.setattr(subagents.models, "build_model", lambda role="vision": "sentinel-model")
+
+    result = subagents.extract_document([b"pngbytes"], "bill")
+
+    assert result.document is bill
+    assert result.payload == bill.model_dump(mode="json")
+    assert result.usage == {"inputTokens": 10, "outputTokens": 5, "totalTokens": 15}
+    assert result.stop_reason == "end_turn"
+    assert captured["init"]["structured_output_model"] is Bill
+    assert captured["init"]["model"] == "sentinel-model"
+
+    content = captured["messages"][0]["content"]
+    assert content[0] == {"text": "Extract this bill exactly as printed."}
+    assert content[1]["image"]["source"]["bytes"] == b"pngbytes"
+
+
+def test_extract_document_passes_through_an_explicit_model(monkeypatch):
+    bill = _sample_bill()
+    captured: dict[str, Any] = {}
+
+    class _FakeExtractorAgent:
+        def __init__(self, **kwargs):
+            captured["init"] = kwargs
+
+        def __call__(self, messages):
+            return _FakeAgentResult(bill, {})
+
+    monkeypatch.setattr(subagents, "Agent", _FakeExtractorAgent)
+
+    def _unused_build_model(role="vision"):
+        raise AssertionError("build_model should not be called when a model is passed explicitly")
+
+    monkeypatch.setattr(subagents.models, "build_model", _unused_build_model)
+
+    subagents.extract_document([b"x"], "eob", model="explicit-model")
+
+    assert captured["init"]["model"] == "explicit-model"
+    assert captured["init"]["structured_output_model"].__name__ == "EOB"
+
+
+def test_extract_document_raises_when_no_structured_output(monkeypatch):
+    class _FakeExtractorAgent:
+        def __init__(self, **kwargs):
+            pass
+
+        def __call__(self, messages):
+            return _FakeAgentResult(None, {})
+
+    monkeypatch.setattr(subagents, "Agent", _FakeExtractorAgent)
+    monkeypatch.setattr(subagents.models, "build_model", lambda role="vision": "sentinel-model")
+
+    with pytest.raises(ValueError):
+        subagents.extract_document([b"x"], "eob")

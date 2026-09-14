@@ -1,0 +1,400 @@
+{
+  "cost": {
+    "documents": 55,
+    "input_tokens": 138168,
+    "output_tokens": 23295,
+    "total_tokens": 161463
+  },
+  "end_to_end": {
+    "exact_amount_match_rate": 0.8666666666666667,
+    "fap_tier_accuracy": 0.0,
+    "mismatches": [
+      {
+        "actual_disputable_cents": 0,
+        "actual_fap_tier": null,
+        "actual_rules": [],
+        "case_id": "arithmetic_balance_01",
+        "category": "ARITHMETIC",
+        "expected_disputable_cents": 18000,
+        "expected_fap_tier": null,
+        "expected_rules": [
+          "ARITHMETIC"
+        ],
+        "false_negative_rules": [
+          "ARITHMETIC"
+        ],
+        "false_positive_rules": []
+      },
+      {
+        "actual_disputable_cents": 0,
+        "actual_fap_tier": null,
+        "actual_rules": [],
+        "case_id": "cash_price_01",
+        "category": "CASH_PRICE",
+        "expected_disputable_cents": 32900,
+        "expected_fap_tier": null,
+        "expected_rules": [
+          "CASH_PRICE"
+        ],
+        "false_negative_rules": [
+          "CASH_PRICE"
+        ],
+        "false_positive_rules": []
+      },
+      {
+        "actual_disputable_cents": 0,
+        "actual_fap_tier": null,
+        "actual_rules": [],
+        "case_id": "cash_price_02",
+        "category": "CASH_PRICE",
+        "expected_disputable_cents": 8100,
+        "expected_fap_tier": null,
+        "expected_rules": [
+          "CASH_PRICE"
+        ],
+        "false_negative_rules": [
+          "CASH_PRICE"
+        ],
+        "false_positive_rules": []
+      },
+      {
+        "actual_disputable_cents": 0,
+        "actual_fap_tier": null,
+        "actual_rules": [],
+        "case_id": "cash_price_03",
+        "category": "CASH_PRICE",
+        "expected_disputable_cents": 31100,
+        "expected_fap_tier": null,
+        "expected_rules": [
+          "CASH_PRICE"
+        ],
+        "false_negative_rules": [
+          "CASH_PRICE"
+        ],
+        "false_positive_rules": []
+      },
+      {
+        "actual_disputable_cents": 0,
+        "actual_fap_tier": null,
+        "actual_rules": [],
+        "case_id": "clean_fap_none",
+        "category": "CLEAN",
+        "expected_disputable_cents": 0,
+        "expected_fap_tier": "NONE",
+        "expected_rules": [],
+        "false_negative_rules": [],
+        "false_positive_rules": []
+      },
+      {
+        "actual_disputable_cents": 0,
+        "actual_fap_tier": null,
+        "actual_rules": [],
+        "case_id": "fap_discount_01",
+        "category": "FAP_501R",
+        "expected_disputable_cents": 0,
+        "expected_fap_tier": "DISCOUNT",
+        "expected_rules": [
+          "FAP_501R"
+        ],
+        "false_negative_rules": [
+          "FAP_501R"
+        ],
+        "false_positive_rules": []
+      },
+      {
+        "actual_disputable_cents": 0,
+        "actual_fap_tier": null,
+        "actual_rules": [],
+        "case_id": "fap_discount_02",
+        "category": "FAP_501R",
+        "expected_disputable_cents": 0,
+        "expected_fap_tier": "DISCOUNT",
+        "expected_rules": [
+          "FAP_501R"
+        ],
+        "false_negative_rules": [
+          "FAP_501R"
+        ],
+        "false_positive_rules": []
+      },
+      {
+        "actual_disputable_cents": 0,
+        "actual_fap_tier": null,
+        "actual_rules": [],
+        "case_id": "fap_free_01",
+        "category": "FAP_501R",
+        "expected_disputable_cents": 0,
+        "expected_fap_tier": "FREE",
+        "expected_rules": [
+          "FAP_501R"
+        ],
+        "false_negative_rules": [
+          "FAP_501R"
+        ],
+        "false_positive_rules": []
+      },
+      {
+        "actual_disputable_cents": 126300,
+        "actual_fap_tier": null,
+        "actual_rules": [
+          "DUPLICATE",
+          "MUE",
+          "NSA_GFE"
+        ],
+        "case_id": "multi_01_selfpay_nyp",
+        "category": "MULTI",
+        "expected_disputable_cents": 159200,
+        "expected_fap_tier": null,
+        "expected_rules": [
+          "CASH_PRICE",
+          "DUPLICATE",
+          "MUE",
+          "NSA_GFE"
+        ],
+        "false_negative_rules": [
+          "CASH_PRICE"
+        ],
+        "false_positive_rules": []
+      },
+      {
+        "actual_disputable_cents": 270000,
+        "actual_fap_tier": null,
+        "actual_rules": [
+          "ARITHMETIC",
+          "DUPLICATE",
+          "MUE"
+        ],
+        "case_id": "multi_03_fap_plus_disputes",
+        "category": "MULTI",
+        "expected_disputable_cents": 270000,
+        "expected_fap_tier": "FREE",
+        "expected_rules": [
+          "ARITHMETIC",
+          "DUPLICATE",
+          "FAP_501R",
+          "MUE"
+        ],
+        "false_negative_rules": [
+          "FAP_501R"
+        ],
+        "false_positive_rules": []
+      },
+      {
+        "actual_disputable_cents": 0,
+        "actual_fap_tier": null,
+        "actual_rules": [],
+        "case_id": "nsa_gfe_03",
+        "category": "NSA_GFE",
+        "expected_disputable_cents": 500000,
+        "expected_fap_tier": null,
+        "expected_rules": [
+          "NSA_GFE"
+        ],
+        "false_negative_rules": [
+          "NSA_GFE"
+        ],
+        "false_positive_rules": []
+      }
+    ],
+    "negative_control_false_positive_count": 0,
+    "negative_control_false_positives": [],
+    "per_rule": {
+      "ARITHMETIC": {
+        "fn": 1,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 0.8,
+        "tp": 4
+      },
+      "CASH_PRICE": {
+        "fn": 4,
+        "fp": 0,
+        "precision": null,
+        "recall": 0.0,
+        "tp": 0
+      },
+      "DUPLICATE": {
+        "fn": 0,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tp": 8
+      },
+      "EOB_BALANCE_BILLING": {
+        "fn": 0,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tp": 4
+      },
+      "FAP_501R": {
+        "fn": 4,
+        "fp": 0,
+        "precision": null,
+        "recall": 0.0,
+        "tp": 0
+      },
+      "MUE": {
+        "fn": 0,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tp": 6
+      },
+      "NCCI_PTP": {
+        "fn": 0,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tp": 5
+      },
+      "NSA_EMERGENCY": {
+        "fn": 0,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tp": 4
+      },
+      "NSA_GFE": {
+        "fn": 1,
+        "fp": 0,
+        "precision": 1.0,
+        "recall": 0.75,
+        "tp": 3
+      }
+    },
+    "rules_exact_match_cases": 35,
+    "total_cases": 45
+  },
+  "field_accuracy": {
+    "bill_documents": 45,
+    "bill_line_exact_match_rate": 1.0,
+    "bill_totals_exact_match_rate": 0.8666666666666667,
+    "documents_exact_match_rate": 0.8909090909090909,
+    "documents_total": 55,
+    "eob_documents": 10,
+    "eob_line_exact_match_rate": 1.0,
+    "eob_scalar_exact_match_rate": 1.0,
+    "extraction_failures": [],
+    "mismatches": [
+      {
+        "case_id": "arithmetic_balance_01",
+        "category": "ARITHMETIC",
+        "issues": [
+          "totals mismatch: expected {'charges_cents': 126000, 'adjustments_cents': 20000, 'payments_cents': 50000, 'patient_balance_cents': 74000}, got {'charges_cents': 126000, 'adjustments_cents': -20000, 'payments_cents': -50000, 'patient_balance_cents': 74000}"
+        ],
+        "kind": "bill"
+      },
+      {
+        "case_id": "clean_eob_balance_equal",
+        "category": "CLEAN",
+        "issues": [
+          "totals mismatch: expected {'charges_cents': 123000, 'adjustments_cents': 70000, 'payments_cents': 33000, 'patient_balance_cents': 20000}, got {'charges_cents': 123000, 'adjustments_cents': -70000, 'payments_cents': -33000, 'patient_balance_cents': 20000}"
+        ],
+        "kind": "bill"
+      },
+      {
+        "case_id": "eob_bb_01",
+        "category": "EOB_BALANCE_BILLING",
+        "issues": [
+          "totals mismatch: expected {'charges_cents': 194000, 'adjustments_cents': 100000, 'payments_cents': 60000, 'patient_balance_cents': 34000}, got {'charges_cents': 194000, 'adjustments_cents': -100000, 'payments_cents': -60000, 'patient_balance_cents': 34000}"
+        ],
+        "kind": "bill"
+      },
+      {
+        "case_id": "eob_bb_02",
+        "category": "EOB_BALANCE_BILLING",
+        "issues": [
+          "totals mismatch: expected {'charges_cents': 123000, 'adjustments_cents': 70000, 'payments_cents': 33000, 'patient_balance_cents': 20000}, got {'charges_cents': 123000, 'adjustments_cents': -70000, 'payments_cents': -33000, 'patient_balance_cents': 20000}"
+        ],
+        "kind": "bill"
+      },
+      {
+        "case_id": "eob_bb_03",
+        "category": "EOB_BALANCE_BILLING",
+        "issues": [
+          "totals mismatch: expected {'charges_cents': 107000, 'adjustments_cents': 60000, 'payments_cents': 27000, 'patient_balance_cents': 20000}, got {'charges_cents': 107000, 'adjustments_cents': -60000, 'payments_cents': -27000, 'patient_balance_cents': 20000}"
+        ],
+        "kind": "bill"
+      },
+      {
+        "case_id": "multi_02_dedupe_max",
+        "category": "MULTI",
+        "issues": [
+          "totals mismatch: expected {'charges_cents': 318400, 'adjustments_cents': 100000, 'payments_cents': 150000, 'patient_balance_cents': 68400}, got {'charges_cents': 318400, 'adjustments_cents': -100000, 'payments_cents': -150000, 'patient_balance_cents': 68400}"
+        ],
+        "kind": "bill"
+      }
+    ],
+    "per_category": {
+      "ADVERSARIAL": {
+        "documents": 6,
+        "exact_match_documents": 6,
+        "exact_match_rate": 1.0
+      },
+      "ARITHMETIC": {
+        "documents": 3,
+        "exact_match_documents": 2,
+        "exact_match_rate": 0.6666666666666666
+      },
+      "CASH_PRICE": {
+        "documents": 3,
+        "exact_match_documents": 3,
+        "exact_match_rate": 1.0
+      },
+      "CLEAN": {
+        "documents": 10,
+        "exact_match_documents": 9,
+        "exact_match_rate": 0.9
+      },
+      "DUPLICATE": {
+        "documents": 3,
+        "exact_match_documents": 3,
+        "exact_match_rate": 1.0
+      },
+      "EOB_BALANCE_BILLING": {
+        "documents": 6,
+        "exact_match_documents": 3,
+        "exact_match_rate": 0.5
+      },
+      "FAP_501R": {
+        "documents": 3,
+        "exact_match_documents": 3,
+        "exact_match_rate": 1.0
+      },
+      "MUE": {
+        "documents": 3,
+        "exact_match_documents": 3,
+        "exact_match_rate": 1.0
+      },
+      "MULTI": {
+        "documents": 6,
+        "exact_match_documents": 5,
+        "exact_match_rate": 0.8333333333333334
+      },
+      "NCCI_PTP": {
+        "documents": 3,
+        "exact_match_documents": 3,
+        "exact_match_rate": 1.0
+      },
+      "NSA_EMERGENCY": {
+        "documents": 6,
+        "exact_match_documents": 6,
+        "exact_match_rate": 1.0
+      },
+      "NSA_GFE": {
+        "documents": 3,
+        "exact_match_documents": 3,
+        "exact_match_rate": 1.0
+      }
+    },
+    "provider_name_fuzzy_match_rate": 1.0
+  },
+  "run": {
+    "cases_evaluated": 45,
+    "corpus_size": 45,
+    "documents_evaluated": 55,
+    "model_provider": "venice",
+    "subset": false
+  }
+}
