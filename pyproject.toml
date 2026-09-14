@@ -11,7 +11,7 @@ dev = ["countercharge-engine[build]"]
 package = false
 
 [tool.uv.workspace]
-members = ["engine", "core"]
+members = ["engine", "core", "tools", "agent"]
 
 [tool.uv.sources]
 countercharge-engine = { workspace = true }

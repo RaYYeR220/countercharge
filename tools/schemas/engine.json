@@ -1,0 +1,89 @@
+[
+  {
+    "name": "audit_case",
+    "description": "Run the full deterministic overcharge/eligibility audit (duplicate charges, NCCI bundling, unit limits, bill-math errors, balance-billing, No Surprises Act protections, cash-price and Medicare-benchmark comparisons, and financial-assistance eligibility) against every document already on file for this case, and persist the signed findings. Call this once per case before making any claim about overcharges, disputable amounts, or charity-care eligibility -- never estimate those from the raw bill yourself.",
+    "inputSchema": {
+      "type": "object",
+      "description": "Input for audit_case",
+      "properties": {
+        "case_id": { "type": "string", "description": "Case id to audit" }
+      },
+      "required": ["case_id"]
+    }
+  },
+  {
+    "name": "check_code_pair",
+    "description": "Check whether two procedure codes billed on the same date of service are subject to a Medicare NCCI procedure-to-procedure (PTP) bundling edit -- i.e. whether billing both as separate charges is disputable. Use for a quick one-off check; audit_case already applies this to every same-day line pair on file.",
+    "inputSchema": {
+      "type": "object",
+      "description": "Input for check_code_pair",
+      "properties": {
+        "code1": { "type": "string", "description": "First CPT/HCPCS procedure code" },
+        "code2": { "type": "string", "description": "Second CPT/HCPCS procedure code" },
+        "setting": {
+          "type": "string",
+          "description": "Billing setting for the encounter: ER, OUTPATIENT, INPATIENT, or PROFESSIONAL"
+        },
+        "dos": { "type": "string", "description": "Date of service, ISO format YYYY-MM-DD" }
+      },
+      "required": ["code1", "code2", "setting", "dos"]
+    }
+  },
+  {
+    "name": "check_units",
+    "description": "Check whether the number of units billed for a procedure code on one line exceeds Medicare's Medically Unlikely Edit (MUE) limit for that code. Use for a quick one-off check; audit_case already applies this to every line on file.",
+    "inputSchema": {
+      "type": "object",
+      "description": "Input for check_units",
+      "properties": {
+        "code": { "type": "string", "description": "CPT/HCPCS procedure code" },
+        "units": { "type": "integer", "description": "Units billed on the line" },
+        "setting": {
+          "type": "string",
+          "description": "Billing setting for the encounter: ER, OUTPATIENT, INPATIENT, or PROFESSIONAL"
+        }
+      },
+      "required": ["code", "units", "setting"]
+    }
+  },
+  {
+    "name": "fap_eligibility",
+    "description": "Check a household's eligibility tier (free care, discounted care, none, or unknown) under a hospital's published IRS 501(r) financial assistance policy, given household size and annual income. Returns null if the hospital has no financial assistance policy on file. This is an eligibility lookup, not a dispute -- use it to tell a patient about a charity-care application opportunity.",
+    "inputSchema": {
+      "type": "object",
+      "description": "Input for fap_eligibility",
+      "properties": {
+        "hospital_id": { "type": "string", "description": "Hospital id" },
+        "household_size": { "type": "integer", "description": "Number of people in the household" },
+        "annual_income_cents": { "type": "integer", "description": "Household annual income, in cents" },
+        "state": { "type": "string", "description": "Two-letter USPS state code of residence" }
+      },
+      "required": ["hospital_id", "household_size", "annual_income_cents", "state"]
+    }
+  },
+  {
+    "name": "hospital_price",
+    "description": "Look up a hospital's own posted price-transparency figures (gross charge, discounted cash price, and negotiated min/max) for one procedure code. Returns null if the hospital hasn't published a price for that code.",
+    "inputSchema": {
+      "type": "object",
+      "description": "Input for hospital_price",
+      "properties": {
+        "hospital_id": { "type": "string", "description": "Hospital id" },
+        "code": { "type": "string", "description": "CPT/HCPCS procedure code" }
+      },
+      "required": ["hospital_id", "code"]
+    }
+  },
+  {
+    "name": "explain_rule",
+    "description": "Get a plain-English explanation, title and legal/regulatory basis for one of the engine's audit rule ids (e.g. DUPLICATE, NCCI_PTP, MUE, ARITHMETIC, EOB_BALANCE_BILLING, NSA_EMERGENCY, NSA_GFE, CASH_PRICE, FAP_501R, MEDICARE_BENCHMARK) so it can be described to a patient without legal jargon.",
+    "inputSchema": {
+      "type": "object",
+      "description": "Input for explain_rule",
+      "properties": {
+        "rule_id": { "type": "string", "description": "Rule id as it appears on a Finding, e.g. NCCI_PTP" }
+      },
+      "required": ["rule_id"]
+    }
+  }
+]

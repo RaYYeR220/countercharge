@@ -1,0 +1,72 @@
+[
+  {
+    "name": "get_case",
+    "description": "Fetch a case's current state: metadata (patient, hospital, reply-to address), the summary of documents on file, every signed audit finding, and every drafted/sent action. Use this to check what's already known about a case before asking the patient to repeat themselves.",
+    "inputSchema": {
+      "type": "object",
+      "description": "Input for get_case",
+      "properties": {
+        "case_id": { "type": "string", "description": "Case id" }
+      },
+      "required": ["case_id"]
+    }
+  },
+  {
+    "name": "save_extraction",
+    "description": "Save one piece of structured, extracted data onto a case -- an itemized bill, an insurance EOB, household/income info, or a good-faith estimate. The payload is validated against the matching engine schema for that kind; an invalid payload is rejected with an error rather than silently stored. Call this once per extracted document before running audit_case.",
+    "inputSchema": {
+      "type": "object",
+      "description": "Input for save_extraction",
+      "properties": {
+        "case_id": { "type": "string", "description": "Case id" },
+        "kind": {
+          "type": "string",
+          "description": "Kind of document being saved: bill, eob, household, or gfe"
+        },
+        "payload": {
+          "type": "object",
+          "description": "Extracted data matching the engine's Bill/EOB/Household/GFE schema for this kind"
+        },
+        "confidence": {
+          "type": "number",
+          "description": "Extraction confidence, 0.0-1.0"
+        }
+      },
+      "required": ["case_id", "kind", "payload", "confidence"]
+    }
+  },
+  {
+    "name": "draft_action",
+    "description": "Draft a dispute letter, financial-assistance application, itemized-bill request, or escalation letter for human approval. Every dollar amount and procedure code the letter cites is checked against the case's signed findings and bill (grounding); a letter that invents a figure is rejected (status rejected_grounding, not sendable) instead of silently drafted. On success, follow up by calling the matching actions___* tool with the returned action_id once an approval_token has been supplied -- never invent or reuse a token from another action.",
+    "inputSchema": {
+      "type": "object",
+      "description": "Input for draft_action",
+      "properties": {
+        "case_id": { "type": "string", "description": "Case id" },
+        "type": {
+          "type": "string",
+          "description": "Action type: dispute_letter, fap_application, itemized_request, or escalation"
+        },
+        "recipient_email": { "type": "string", "description": "Intended recipient email address" },
+        "finding_ids": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Ids of the signed findings this action cites (empty array if none apply)"
+        },
+        "letter_markdown": {
+          "type": "string",
+          "description": "Full markdown text of the letter; every $amount and procedure code in it must be traceable to a cited finding or the bill"
+        },
+        "disputed_amount_cents": {
+          "type": "integer",
+          "description": "Total amount being disputed or requested, in cents (0 if not applicable to this action type)"
+        },
+        "channel": {
+          "type": "string",
+          "description": "Required only when type is escalation: NSA_HELPDESK, STATE_AG, CFPB, or STATE_INSURANCE"
+        }
+      },
+      "required": ["case_id", "type", "recipient_email", "finding_ids", "letter_markdown", "disputed_amount_cents"]
+    }
+  }
+]

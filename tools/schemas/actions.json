@@ -1,0 +1,105 @@
+[
+  {
+    "name": "send_dispute_letter",
+    "description": "Send a previously drafted dispute letter to the hospital's billing contact. Requires a valid approval_token issued for this exact action_id and inputs -- calling this without one, or after changing the recipient or amount since the draft was approved, is denied and logged. Only disputable findings may be cited and the disputed amount can't exceed what those findings support.",
+    "inputSchema": {
+      "type": "object",
+      "description": "Input for send_dispute_letter",
+      "properties": {
+        "case_id": { "type": "string", "description": "Case id" },
+        "action_id": { "type": "string", "description": "Action id returned by draft_action" },
+        "recipient_email": { "type": "string", "description": "Recipient email; must match the hospital's allowed billing address for this case" },
+        "finding_ids": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Ids of the disputable findings this letter cites; must match what was drafted"
+        },
+        "disputed_amount_cents": {
+          "type": "integer",
+          "description": "Total amount being disputed, in cents; must match what was drafted and not exceed the cited findings' amounts"
+        },
+        "approval_token": {
+          "type": "string",
+          "description": "Approval token issued by a human approver for this exact action_id and inputs"
+        }
+      },
+      "required": ["case_id", "action_id", "recipient_email", "finding_ids", "disputed_amount_cents", "approval_token"]
+    }
+  },
+  {
+    "name": "submit_fap_application",
+    "description": "Send a previously drafted financial-assistance (charity care) application to the hospital. Requires a valid approval_token issued for this exact action_id and inputs.",
+    "inputSchema": {
+      "type": "object",
+      "description": "Input for submit_fap_application",
+      "properties": {
+        "case_id": { "type": "string", "description": "Case id" },
+        "action_id": { "type": "string", "description": "Action id returned by draft_action" },
+        "recipient_email": { "type": "string", "description": "Recipient email; must match the hospital's allowed billing address for this case" },
+        "approval_token": {
+          "type": "string",
+          "description": "Approval token issued by a human approver for this exact action_id and inputs"
+        }
+      },
+      "required": ["case_id", "action_id", "recipient_email", "approval_token"]
+    }
+  },
+  {
+    "name": "request_itemized_bill",
+    "description": "Send a previously drafted itemized-bill request to the hospital's billing contact. Requires a valid approval_token issued for this exact action_id and inputs.",
+    "inputSchema": {
+      "type": "object",
+      "description": "Input for request_itemized_bill",
+      "properties": {
+        "case_id": { "type": "string", "description": "Case id" },
+        "action_id": { "type": "string", "description": "Action id returned by draft_action" },
+        "recipient_email": { "type": "string", "description": "Recipient email; must match the hospital's allowed billing address for this case" },
+        "approval_token": {
+          "type": "string",
+          "description": "Approval token issued by a human approver for this exact action_id and inputs"
+        }
+      },
+      "required": ["case_id", "action_id", "recipient_email", "approval_token"]
+    }
+  },
+  {
+    "name": "file_escalation",
+    "description": "File a previously drafted complaint escalation (No Surprises Act help desk, state attorney general, CFPB, or state insurance regulator). Demo limit: the complaint packet is always emailed to the same test inbox used for this case's hospital, regardless of channel -- no real regulator is contacted. Requires a valid approval_token and at least one cited finding.",
+    "inputSchema": {
+      "type": "object",
+      "description": "Input for file_escalation",
+      "properties": {
+        "case_id": { "type": "string", "description": "Case id" },
+        "action_id": { "type": "string", "description": "Action id returned by draft_action" },
+        "channel": {
+          "type": "string",
+          "description": "Escalation channel: NSA_HELPDESK, STATE_AG, CFPB, or STATE_INSURANCE"
+        },
+        "finding_ids": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Ids of the findings this escalation cites; must be non-empty and match what was drafted"
+        },
+        "approval_token": {
+          "type": "string",
+          "description": "Approval token issued by a human approver for this exact action_id and inputs"
+        }
+      },
+      "required": ["case_id", "action_id", "channel", "finding_ids", "approval_token"]
+    }
+  },
+  {
+    "name": "schedule_followup",
+    "description": "Schedule a one-time automatic follow-up on this case after a number of days (1-90), e.g. to check for a reply and consider escalating. No human approval is required for this tool -- it only schedules a check-in, it doesn't contact anyone external.",
+    "inputSchema": {
+      "type": "object",
+      "description": "Input for schedule_followup",
+      "properties": {
+        "case_id": { "type": "string", "description": "Case id" },
+        "days": { "type": "integer", "description": "Days from now to follow up, 1-90" },
+        "reason": { "type": "string", "description": "Short reason for the follow-up, shown on the case timeline" }
+      },
+      "required": ["case_id", "days", "reason"]
+    }
+  }
+]
