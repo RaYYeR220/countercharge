@@ -15,6 +15,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from countercharge_engine import datasets
+
 
 @dataclass(frozen=True)
 class Source:
@@ -30,7 +32,7 @@ _NCCI_PTP_PAGE = (
 )
 
 NCCI_PTP_PRAC = Source(
-    dataset="NCCI-PTP-PRAC",
+    dataset=datasets.NCCI_PTP_PRAC,
     version="2026Q4 v323r0",
     page_url=_NCCI_PTP_PAGE,
     files=tuple(
@@ -41,7 +43,7 @@ NCCI_PTP_PRAC = Source(
 )
 
 NCCI_PTP_OPPS = Source(
-    dataset="NCCI-PTP-OPPS",
+    dataset=datasets.NCCI_PTP_OPPS,
     version="2026Q4 v323r0",
     page_url=_NCCI_PTP_PAGE,
     files=tuple(
@@ -57,7 +59,7 @@ _NCCI_MUE_PAGE = (
 )
 
 NCCI_MUE_PRAC = Source(
-    dataset="NCCI-MUE-PRAC",
+    dataset=datasets.NCCI_MUE_PRAC,
     version="2026Q4 eff. 2026-10-01",
     page_url=_NCCI_MUE_PAGE,
     files=(
@@ -67,7 +69,7 @@ NCCI_MUE_PRAC = Source(
 )
 
 NCCI_MUE_OPPS = Source(
-    dataset="NCCI-MUE-OPPS",
+    dataset=datasets.NCCI_MUE_OPPS,
     version="2026Q4 eff. 2026-10-01",
     page_url=_NCCI_MUE_PAGE,
     files=(
@@ -77,7 +79,7 @@ NCCI_MUE_OPPS = Source(
 )
 
 NCCI_MUE_DME = Source(
-    dataset="NCCI-MUE-DME",
+    dataset=datasets.NCCI_MUE_DME,
     version="2026Q4 eff. 2026-10-01",
     page_url=_NCCI_MUE_PAGE,
     files=(
@@ -87,7 +89,7 @@ NCCI_MUE_DME = Source(
 )
 
 PFS_RVU = Source(
-    dataset="PFS-RVU",
+    dataset=datasets.PFS_RVU,
     version="RVU26B eff. 2026-05-01",
     page_url="https://www.cms.gov/medicare/payment/fee-schedules/physician/pfs-relative-value-files/rvu26b",
     files=("https://www.cms.gov/files/zip/rvu26b-updated-05-01-2026.zip",),
@@ -97,14 +99,14 @@ PFS_RVU = Source(
 PFS_CONVERSION_FACTOR = "33.4009"
 
 HCPCS2 = Source(
-    dataset="HCPCS2",
+    dataset=datasets.HCPCS2,
     version="2026 October quarterly update",
     page_url="https://www.cms.gov/medicare/coding-billing/healthcare-common-procedure-system/quarterly-update",
     files=("https://www.cms.gov/files/zip/october-2026-alpha-numeric-hcpcs-file.zip",),
 )
 
 FPL = Source(
-    dataset="FPL",
+    dataset=datasets.FPL,
     version="2026 HHS Poverty Guidelines",
     page_url=(
         "https://aspe.hhs.gov/sites/default/files/documents/"
@@ -114,7 +116,7 @@ FPL = Source(
 )
 
 HPT_NYP = Source(
-    dataset="HPT-nyp",
+    dataset=datasets.hpt_dataset("nyp"),
     version="NewYork-Presbyterian standardcharges.json v3.0.0 (last_updated_on 2026-03-31)",
     page_url=(
         "https://www.nyp.org/patients-visitors/paying-for-care/"

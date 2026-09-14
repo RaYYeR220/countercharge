@@ -98,8 +98,8 @@ def _case2_refdata():
             "NCCI-PTP-OPPS": DatasetInfo(
                 dataset="NCCI-PTP-OPPS", version="2026Q4 v323r0", url="https://cms.gov/ncci"
             ),
-            "MUE-OPPS": DatasetInfo(
-                dataset="MUE-OPPS", version="2026Q4", url="https://cms.gov/mue"
+            "NCCI-MUE-OPPS": DatasetInfo(
+                dataset="NCCI-MUE-OPPS", version="2026Q4", url="https://cms.gov/mue"
             ),
         },
     )

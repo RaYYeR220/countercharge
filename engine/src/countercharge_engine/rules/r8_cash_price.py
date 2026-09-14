@@ -5,6 +5,7 @@ the price transparency rule. Charging a self-pay patient more than
 that posted price for the same code is disputable on its own terms.
 """
 
+from countercharge_engine import datasets
 from countercharge_engine.canonical import with_id
 from countercharge_engine.models import Finding
 from countercharge_engine.rules.common import AuditContext, citation
@@ -42,7 +43,7 @@ def check(ctx: AuditContext) -> list[Finding]:
             ),
             citation=citation(
                 ctx.refdata,
-                f"HPT-{hospital_id}",
+                datasets.hpt_dataset(hospital_id),
                 {"code": line.code, "cash_cents": price.cash_cents},
             ),
             evidence={"cash_cents": price.cash_cents, "units": line.units},

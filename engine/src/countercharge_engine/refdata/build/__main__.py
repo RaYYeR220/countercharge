@@ -22,6 +22,7 @@ from urllib.parse import urlsplit
 
 import httpx
 
+from countercharge_engine import datasets
 from countercharge_engine.refdata.build import sources
 from countercharge_engine.refdata.build.fap import load_hospital_faps
 from countercharge_engine.refdata.build.fpl import ROWS as FPL_ROWS
@@ -352,13 +353,13 @@ def main(argv: list[str] | None = None) -> int:
     n = _ingest_fap(conn, hospitals_path)
     print(f"hospital_fap: {n} rows")
     for h in load_hospital_faps(hospitals_path):
+        fap_dataset = datasets.fap_dataset(h.hospital_id)
+        fap_version = f"policy retrieved {h.retrieved.isoformat()}"
         conn.execute(
             "INSERT INTO datasets (dataset, version, url) VALUES (?,?,?)",
-            (f"FAP-{h.hospital_id}", f"policy retrieved {h.retrieved.isoformat()}", h.source_url),
+            (fap_dataset, fap_version, h.source_url),
         )
-        refdata_rows.append(
-            (f"FAP-{h.hospital_id}", f"policy retrieved {h.retrieved.isoformat()}", h.source_url, 1, retrieved)
-        )
+        refdata_rows.append((fap_dataset, fap_version, h.source_url, 1, retrieved))
 
     conn.execute(
         "INSERT INTO meta (key, value) VALUES ('version', ?)",

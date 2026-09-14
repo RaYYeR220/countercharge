@@ -10,6 +10,7 @@ from dataclasses import dataclass
 from datetime import date
 from typing import Literal
 
+from countercharge_engine import datasets
 from countercharge_engine.models import Bill, Citation, EOB, GFE, Household, Finding, Setting
 from countercharge_engine.refdata.base import RefData
 
@@ -35,6 +36,16 @@ def ptp_table(setting: Setting) -> Literal["prac", "opps"]:
 def mue_table(setting: Setting) -> Literal["prac", "opps", "dme"]:
     """NCCI MUE table to query for a given bill setting."""
     return "prac" if setting == Setting.PROFESSIONAL else "opps"
+
+
+def ptp_dataset(table: Literal["prac", "opps"]) -> str:
+    """Dataset key to cite for an NCCI PTP table, matching the refdata builder."""
+    return datasets.PTP_DATASET[table]
+
+
+def mue_dataset(table: Literal["prac", "opps", "dme"]) -> str:
+    """Dataset key to cite for an NCCI MUE table, matching the refdata builder."""
+    return datasets.MUE_DATASET[table]
 
 
 NCCI_MODIFIERS: frozenset[str] = frozenset(

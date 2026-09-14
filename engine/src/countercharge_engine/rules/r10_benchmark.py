@@ -7,6 +7,7 @@ a provider may charge -- so it belongs in the advisory list, not the
 disputable one.
 """
 
+from countercharge_engine import datasets
 from countercharge_engine.canonical import with_id
 from countercharge_engine.models import Finding, Setting
 from countercharge_engine.rules.common import AuditContext, citation
@@ -45,7 +46,7 @@ def check(ctx: AuditContext) -> list[Finding]:
             ),
             citation=citation(
                 ctx.refdata,
-                "PFS-RVU",
+                datasets.PFS_RVU,
                 {"code": line.code, "facility": int(facility)},
             ),
             evidence={"ratio_x100": ratio_x100},

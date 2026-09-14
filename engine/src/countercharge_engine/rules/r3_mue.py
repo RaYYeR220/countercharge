@@ -8,14 +8,14 @@ that code/dos and flagged as disputable.
 
 from countercharge_engine.canonical import with_id
 from countercharge_engine.models import Finding, LineItem
-from countercharge_engine.rules.common import AuditContext, citation, mue_table
+from countercharge_engine.rules.common import AuditContext, citation, mue_dataset, mue_table
 
 RULE_ID = "MUE"
 
 
 def check(ctx: AuditContext) -> list[Finding]:
     table = mue_table(ctx.bill.setting)
-    dataset = {"prac": "MUE-PRAC", "opps": "MUE-OPPS", "dme": "MUE-DME"}[table]
+    dataset = mue_dataset(table)
 
     groups: dict[tuple, list[LineItem]] = {}
     for line in ctx.bill.lines:

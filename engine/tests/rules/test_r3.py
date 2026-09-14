@@ -40,9 +40,12 @@ def _ctx(lines, refdata):
 def _refdata(mue_edits):
     return MemoryRefData(
         mue=mue_edits,
+        # Dataset key must match what the refdata builder actually writes into
+        # the sqlite `datasets` table for the OPPS MUE table (see
+        # refdata/build/sources.py's NCCI_MUE_OPPS) -- not a bare "MUE-OPPS".
         infos={
-            "MUE-OPPS": DatasetInfo(
-                dataset="MUE-OPPS", version="2026Q4", url="https://cms.gov/mue"
+            "NCCI-MUE-OPPS": DatasetInfo(
+                dataset="NCCI-MUE-OPPS", version="2026Q4", url="https://cms.gov/mue"
             )
         },
     )

@@ -11,7 +11,13 @@ reverse lookup returns ``None`` unless a distinct edit exists for it.
 
 from countercharge_engine.canonical import with_id
 from countercharge_engine.models import Finding, LineItem
-from countercharge_engine.rules.common import NCCI_MODIFIERS, AuditContext, citation, ptp_table
+from countercharge_engine.rules.common import (
+    NCCI_MODIFIERS,
+    AuditContext,
+    citation,
+    ptp_dataset,
+    ptp_table,
+)
 
 RULE_ID = "NCCI_PTP"
 
@@ -22,7 +28,7 @@ def _has_ncci_modifier(*lines: LineItem) -> bool:
 
 def check(ctx: AuditContext) -> list[Finding]:
     table = ptp_table(ctx.bill.setting)
-    dataset = "NCCI-PTP-PRAC" if table == "prac" else "NCCI-PTP-OPPS"
+    dataset = ptp_dataset(table)
     lines = ctx.bill.lines
 
     findings: list[Finding] = []

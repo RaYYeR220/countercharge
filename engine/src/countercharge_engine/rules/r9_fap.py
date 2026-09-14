@@ -8,6 +8,7 @@ application opportunity, not a dispute, so its finding is advisory
 (``disputable=False``).
 """
 
+from countercharge_engine import datasets
 from countercharge_engine.canonical import with_id
 from countercharge_engine.fpl import fpl_percent
 from countercharge_engine.models import FapResult, FapTier, Finding
@@ -45,7 +46,7 @@ def evaluate_fap(ctx: AuditContext) -> FapResult | None:
         discount_max_fpl=fap.discount_max_fpl,
         citation=citation(
             ctx.refdata,
-            f"FAP-{provider.hospital_id}",
+            datasets.fap_dataset(provider.hospital_id),
             {"hospital_id": provider.hospital_id},
         ),
     )
