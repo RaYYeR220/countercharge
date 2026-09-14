@@ -1,0 +1,132 @@
+{
+  "case": {
+    "adversarial_text": null,
+    "bill": {
+      "account_no": "CCF-2026-100025",
+      "lines": [
+        {
+          "charge_cents": 185000,
+          "code": "99284",
+          "code_type": "CPT",
+          "description": "Emergency department visit, level 4",
+          "dos": "2026-09-09",
+          "line_id": "L1",
+          "modifiers": [],
+          "rev_code": "0450",
+          "units": 1
+        },
+        {
+          "charge_cents": 18000,
+          "code": "85025",
+          "code_type": "CPT",
+          "description": "Complete blood count with differential",
+          "dos": "2026-09-09",
+          "line_id": "L2",
+          "modifiers": [],
+          "rev_code": "0305",
+          "units": 1
+        }
+      ],
+      "pos": null,
+      "provider": {
+        "billing_email_domain": "clevelandclinic.org",
+        "ein": "13-1000025",
+        "hospital_id": "ccf",
+        "name": "Cleveland Clinic",
+        "nonprofit": true,
+        "npi": "1800000025"
+      },
+      "self_pay": true,
+      "setting": "ER",
+      "statement_date": "2026-09-30",
+      "totals": {
+        "adjustments_cents": 0,
+        "charges_cents": 203000,
+        "patient_balance_cents": 203000,
+        "payments_cents": 0
+      }
+    },
+    "case_id": "fap_free_01",
+    "category": "FAP_501R",
+    "eob": null,
+    "gfe": null,
+    "household": {
+      "annual_income_cents": 4000000,
+      "size": 3,
+      "state": "OH"
+    },
+    "layout": "bill_statement",
+    "patient": {
+      "email": "richard.martin25@example.net",
+      "name": "Richard Martin",
+      "state": "OH"
+    }
+  },
+  "report": {
+    "findings": [
+      {
+        "finding_id": "f_8d04424348417c87",
+        "rule_id": "FAP_501R",
+        "disputable": false,
+        "line_ids": [],
+        "amount_cents": 203000,
+        "title": "Likely eligible for free care",
+        "detail": "Based on your household size and income relative to the federal poverty level, this hospital's financial assistance policy likely qualifies you for free care.",
+        "citation": {
+          "dataset": "FAP-ccf",
+          "version": "policy retrieved 2026-09-14",
+          "url": "https://my.clevelandclinic.org/-/scassets/files/org/patients-visitors/billing/financial-assistance/7-financial-assistance-program-policy.pdf",
+          "record": {
+            "hospital_id": "ccf"
+          }
+        },
+        "evidence": {
+          "fpl_percent": 146,
+          "tier": "FREE"
+        }
+      }
+    ],
+    "advisory": [
+      {
+        "finding_id": "f_09304ddd96e23bb8",
+        "rule_id": "MEDICARE_BENCHMARK",
+        "disputable": false,
+        "line_ids": [
+          "L1"
+        ],
+        "amount_cents": 173176,
+        "title": "Charge is far above the Medicare rate",
+        "detail": "Code 99284 was charged well above the national Medicare rate for this service.",
+        "citation": {
+          "dataset": "PFS-RVU",
+          "version": "RVU26B eff. 2026-05-01",
+          "url": "https://www.cms.gov/medicare/payment/fee-schedules/physician/pfs-relative-value-files/rvu26b",
+          "record": {
+            "code": "99284",
+            "facility": 1
+          }
+        },
+        "evidence": {
+          "ratio_x100": 1564
+        }
+      }
+    ],
+    "disputable_cents": 0,
+    "fap": {
+      "hospital_id": "ccf",
+      "fpl_percent": 146,
+      "tier": "FREE",
+      "free_max_fpl": 250,
+      "discount_max_fpl": 400,
+      "citation": {
+        "dataset": "FAP-ccf",
+        "version": "policy retrieved 2026-09-14",
+        "url": "https://my.clevelandclinic.org/-/scassets/files/org/patients-visitors/billing/financial-assistance/7-financial-assistance-program-policy.pdf",
+        "record": {
+          "hospital_id": "ccf"
+        }
+      }
+    },
+    "refdata_version": "2026Q4 (built 2026-09-14)"
+  }
+}

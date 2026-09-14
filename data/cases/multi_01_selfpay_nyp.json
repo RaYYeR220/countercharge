@@ -1,0 +1,217 @@
+{
+  "case": {
+    "adversarial_text": null,
+    "bill": {
+      "account_no": "NYP-2026-100028",
+      "lines": [
+        {
+          "charge_cents": 420000,
+          "code": "A0425",
+          "code_type": "HCPCS",
+          "description": "Ground mileage",
+          "dos": "2026-09-21",
+          "line_id": "L1",
+          "modifiers": [],
+          "rev_code": "0540",
+          "units": 300
+        },
+        {
+          "charge_cents": 150000,
+          "code": "71046",
+          "code_type": "CPT",
+          "description": "Chest X-ray, two views",
+          "dos": "2026-09-21",
+          "line_id": "L2",
+          "modifiers": [],
+          "rev_code": "0320",
+          "units": 1
+        },
+        {
+          "charge_cents": 11300,
+          "code": "85025",
+          "code_type": "CPT",
+          "description": "Complete blood count with differential",
+          "dos": "2026-09-21",
+          "line_id": "L3",
+          "modifiers": [],
+          "rev_code": "0305",
+          "units": 1
+        },
+        {
+          "charge_cents": 11300,
+          "code": "85025",
+          "code_type": "CPT",
+          "description": "Complete blood count with differential",
+          "dos": "2026-09-21",
+          "line_id": "L4",
+          "modifiers": [],
+          "rev_code": "0305",
+          "units": 1
+        }
+      ],
+      "pos": null,
+      "provider": {
+        "billing_email_domain": "nyp.org",
+        "ein": "13-1000028",
+        "hospital_id": "nyp",
+        "name": "NewYork-Presbyterian Hospital",
+        "nonprofit": true,
+        "npi": "1800000028"
+      },
+      "self_pay": true,
+      "setting": "ER",
+      "statement_date": "2026-10-12",
+      "totals": {
+        "adjustments_cents": 0,
+        "charges_cents": 592600,
+        "patient_balance_cents": 592600,
+        "payments_cents": 0
+      }
+    },
+    "case_id": "multi_01_selfpay_nyp",
+    "category": "MULTI",
+    "eob": null,
+    "gfe": {
+      "date": "2026-09-11",
+      "total_cents": 547600
+    },
+    "household": null,
+    "layout": "bill_statement",
+    "patient": {
+      "email": "jessica.jackson28@example.net",
+      "name": "Jessica Jackson",
+      "state": "NY"
+    }
+  },
+  "report": {
+    "findings": [
+      {
+        "finding_id": "f_5bf0194b8fe50050",
+        "rule_id": "DUPLICATE",
+        "disputable": true,
+        "line_ids": [
+          "L3",
+          "L4"
+        ],
+        "amount_cents": 11300,
+        "title": "Duplicate charge",
+        "detail": "Code 85025 was billed twice for the same date of service with identical units, charge and modifiers.",
+        "citation": {
+          "dataset": "BILL",
+          "version": "n/a",
+          "url": "",
+          "record": {
+            "code": "85025",
+            "dos": "2026-09-21",
+            "units": 1,
+            "charge_cents": 11300
+          }
+        },
+        "evidence": {
+          "target_key": "L4"
+        }
+      },
+      {
+        "finding_id": "f_5d96b06f26f44d3c",
+        "rule_id": "MUE",
+        "disputable": true,
+        "line_ids": [
+          "L1"
+        ],
+        "amount_cents": 70000,
+        "title": "Units exceed Medicare's per-day limit",
+        "detail": "Code A0425 was billed 300 units on this line, more than the 250 unit(s) Medicare allows on a single claim line.",
+        "citation": {
+          "dataset": "NCCI-MUE-OPPS",
+          "version": "2026Q4 eff. 2026-10-01",
+          "url": "https://www.cms.gov/medicare/coding-billing/national-correct-coding-initiative-ncci-edits/medicare-ncci-medically-unlikely-edits-mues",
+          "record": {
+            "code": "A0425",
+            "dos": "2026-09-21",
+            "mue_value": 250
+          }
+        },
+        "evidence": {
+          "mai": 1,
+          "mue_value": 250,
+          "line_units": 300,
+          "target_key": "L1"
+        }
+      },
+      {
+        "finding_id": "f_189e38dce706fb7e",
+        "rule_id": "NSA_GFE",
+        "disputable": true,
+        "line_ids": [],
+        "amount_cents": 45000,
+        "title": "Billed $400 or more above your good-faith estimate",
+        "detail": "You're self-pay and got a good-faith estimate for this care. The actual charges are at least $400 above that estimate, which qualifies you to dispute the difference.",
+        "citation": {
+          "dataset": "NSA",
+          "version": "45 CFR 149.620",
+          "url": "https://www.cms.gov/nosurprises",
+          "record": {
+            "gfe_total_cents": 547600,
+            "charges_cents": 592600
+          }
+        },
+        "evidence": {
+          "ppdr_deadline": "2027-02-09"
+        }
+      },
+      {
+        "finding_id": "f_0911023c98da368b",
+        "rule_id": "CASH_PRICE",
+        "disputable": true,
+        "line_ids": [
+          "L2"
+        ],
+        "amount_cents": 32900,
+        "title": "Charged above the hospital's own cash price",
+        "detail": "For code 71046, this hospital publishes a discounted cash price for self-pay patients that is lower than what was charged on this line.",
+        "citation": {
+          "dataset": "HPT-nyp",
+          "version": "NewYork-Presbyterian standardcharges.json v3.0.0 (last_updated_on 2026-03-31)",
+          "url": "https://www.nyp.org/patients-visitors/paying-for-care/hospital-price-transparency/standard-charges",
+          "record": {
+            "code": "71046",
+            "cash_cents": 117100
+          }
+        },
+        "evidence": {
+          "cash_cents": 117100,
+          "units": 1,
+          "target_key": "L2"
+        }
+      }
+    ],
+    "advisory": [
+      {
+        "finding_id": "f_3b675047a306704f",
+        "rule_id": "MEDICARE_BENCHMARK",
+        "disputable": false,
+        "line_ids": [
+          "L2"
+        ],
+        "amount_cents": 146693,
+        "title": "Charge is far above the Medicare rate",
+        "detail": "Code 71046 was charged well above the national Medicare rate for this service.",
+        "citation": {
+          "dataset": "PFS-RVU",
+          "version": "RVU26B eff. 2026-05-01",
+          "url": "https://www.cms.gov/medicare/payment/fee-schedules/physician/pfs-relative-value-files/rvu26b",
+          "record": {
+            "code": "71046",
+            "facility": 1
+          }
+        },
+        "evidence": {
+          "ratio_x100": 4535
+        }
+      }
+    ],
+    "disputable_cents": 159200,
+    "fap": null,
+    "refdata_version": "2026Q4 (built 2026-09-14)"
+  }
+}

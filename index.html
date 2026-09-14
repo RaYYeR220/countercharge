@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Countercharge — The Claims Desk</title>
+<meta name="description" content="Countercharge reads every hospital bill against the federal rulebook, marks what it can prove with a citation, and drafts the dispute — nothing ships without a signature." />
+<link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+
+<header class="top">
+  <a class="mark" href="index.html"><span class="dot"></span>Countercharge</a>
+  <nav class="top-links">
+    <a href="index.html" aria-current="page">Home</a>
+    <a href="case.html">Audit a case</a>
+    <a href="trust.html">Trust center</a>
+  </nav>
+</header>
+
+<main>
+  <div class="hero">
+    <h1 class="headline" id="headline" aria-label="Every hospital bill gets a second reader."><span id="typed"></span><span id="caret"></span></h1>
+    <p class="lede">Countercharge reads each claim against Medicare's own rulebook, marks what it can prove, and drafts the dispute in triplicate — nothing ships without an advocate's signature.</p>
+    <div class="cta-row">
+      <a class="cta" href="case.html?id=multi_01_selfpay_nyp" role="button">Audit a sample bill</a>
+      <span class="cta-note">no login required &middot; runs on real audit data</span>
+    </div>
+
+    <div class="stack" aria-hidden="true">
+      <div class="sheet tan"></div>
+      <div class="sheet pink"></div>
+      <div class="sheet white">
+        <div class="ticket-head">
+          <span>CLAIM TICKET NO. NYP-2026-100028</span>
+          <span>NEWYORK-PRESBYTERIAN</span>
+        </div>
+        <div class="trow">
+          <span class="d strike">85025 CBC W/ DIFFERENTIAL<span class="note">DUPLICATE OF LINE L3 — DISPUTE</span></span>
+          <span class="a">$113.00</span>
+        </div>
+        <div class="trow">
+          <span class="d strike">A0425 GROUND MILEAGE, 300U<span class="note">EXCEEDS MEDICARE UNIT LIMIT — DISPUTE</span></span>
+          <span class="a">$4,200.00</span>
+        </div>
+        <div class="trow">
+          <span class="d strike">71046 CHEST X-RAY, 2V<span class="note">ABOVE HOSPITAL CASH PRICE — DISPUTE</span></span>
+          <span class="a">$1,500.00</span>
+        </div>
+        <div class="trow">
+          <span class="d">TOTAL BILLED VS. ESTIMATE<span class="note held">$450 OVER GOOD-FAITH ESTIMATE</span></span>
+          <span class="a">$5,926.00</span>
+        </div>
+        <div class="stamp" id="stamp">AUDITED</div>
+      </div>
+    </div>
+  </div>
+
+  <section class="panel">
+    <div class="wrap">
+      <h2 class="section-title">How the three gates work</h2>
+      <div class="cols3">
+        <div class="gate-card">
+          <span class="num">GATE 1 — ENGINE</span>
+          <h3>Every line, checked against a citation</h3>
+          <p>A deterministic rules engine (duplicates, NCCI bundling, Medicare unit limits, arithmetic, balance billing, No Surprises Act, cash-price, charity care) reads the bill against CMS/HHS reference data. Every finding carries a dataset, version and record — nothing is asserted without a source.</p>
+        </div>
+        <div class="gate-card">
+          <span class="num">GATE 2 — POLICY</span>
+          <h3>Cedar decides what's allowed to happen next</h3>
+          <p>Before any letter is drafted or sent, an authorization policy checks the role, the recipient, the approval token and the finding set. No citation, no dispute. Wrong recipient, no send. No token, no send.</p>
+        </div>
+        <div class="gate-card">
+          <span class="num">GATE 3 — HUMAN</span>
+          <h3>Nothing ships without a signature</h3>
+          <p>Every outbound action pauses for an advocate's explicit approval, and the exact amount and recipient approved are hashed and re-checked at send time — a changed number after approval is refused, not silently sent.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="wrap">
+      <h2 class="section-title">Who it's for</h2>
+      <p style="max-width:62ch;color:var(--ink-soft);font-size:15px;">
+        Built for nonprofit patient advocates and financial-counseling teams who read hospital bills
+        for a living — not for patients to self-serve. It turns a stack of paper into a worked case file:
+        every disputable dollar traced to a rule and a record, every charity-care eligibility check shown
+        with its math, and a dispute letter that only quotes what the engine already proved.
+      </p>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="wrap">
+      <h2 class="section-title">Proof, not a promise</h2>
+      <p style="margin-top:-10px;color:var(--ink-soft);font-size:13.5px;">From the real engine scorecard (<code class="mono">evals/results/engine-scorecard.json</code>), run against 45 corpus cases.</p>
+      <div class="stat-row">
+        <div class="stat"><span class="n" id="stat-exact">—</span><span class="l">Exact rule-set match</span></div>
+        <div class="stat"><span class="n" id="stat-amount">—</span><span class="l">Exact $ match rate</span></div>
+        <div class="stat"><span class="n" id="stat-fap">—</span><span class="l">FAP tier accuracy</span></div>
+        <div class="stat"><span class="n" id="stat-fp">—</span><span class="l">False positives on clean bills</span></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  Countercharge — a claims desk for patient advocates. <a href="trust.html">Trust center</a> for policy source and refdata versions.
+</footer>
+
+<script src="js/common.js"></script>
+<script src="js/index.js"></script>
+</body>
+</html>
