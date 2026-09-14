@@ -246,6 +246,33 @@ def _connect(out_path: Path) -> sqlite3.Connection:
     return conn
 
 
+def _connect_existing(out_path: Path) -> sqlite3.Connection:
+    if not out_path.exists():
+        raise SystemExit(f"--only-mrf requires an existing sqlite database at {out_path}")
+    return sqlite3.connect(str(out_path))
+
+
+def _rebuild_mrf_only(
+    conn: sqlite3.Connection,
+    client: httpx.Client,
+    raw_dir: Path,
+    hospital_id: str,
+    codes: set[str],
+) -> int:
+    """Rebuild just ``hospital_price`` (and its dataset row) for one
+    hospital in an already-built sqlite, leaving every other table alone."""
+    conn.execute("DELETE FROM hospital_price WHERE hospital_id = ?", (hospital_id,))
+    conn.execute("DELETE FROM datasets WHERE dataset = ?", (datasets.hpt_dataset(hospital_id),))
+    conn.commit()
+    n = _ingest_mrf(conn, client, raw_dir, sources.HPT_NYP, hospital_id, codes)
+    conn.execute(
+        "INSERT INTO datasets (dataset, version, url) VALUES (?,?,?)",
+        (sources.HPT_NYP.dataset, sources.HPT_NYP.version, sources.HPT_NYP.page_url),
+    )
+    conn.commit()
+    return n
+
+
 def _smoke_test(conn: sqlite3.Connection, *, skip_mrf: bool) -> None:
     checks: list[tuple[str, bool]] = []
 
@@ -299,9 +326,28 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--raw-dir", type=Path, default=RAW_DIR)
     parser.add_argument("--hospital-id", default="nyp")
     parser.add_argument("--skip-mrf", action="store_true")
+    parser.add_argument(
+        "--only-mrf",
+        action="store_true",
+        help=(
+            "Rebuild only hospital_price (and its HPT-<hospital-id> dataset "
+            "row) in the existing sqlite at --out, leaving every other "
+            "table untouched. Fails if --out doesn't already exist."
+        ),
+    )
     args = parser.parse_args(argv)
 
     codes = _load_codes_of_interest(DATA_DIR / "codes_of_interest.txt")
+
+    if args.only_mrf:
+        conn = _connect_existing(args.out)
+        with httpx.Client(headers={"User-Agent": "Mozilla/5.0 countercharge-refdata-builder"}) as client:
+            n = _rebuild_mrf_only(conn, client, args.raw_dir, args.hospital_id, codes)
+        conn.close()
+        print(f"hospital_price[{args.hospital_id}]: {n} rows")
+        print(f"\nupdated {args.out} (--only-mrf)")
+        return 0
+
     retrieved = date.today().isoformat()
     refdata_rows: list[tuple[str, str, str, int, str]] = []
 
