@@ -1,0 +1,31 @@
+flowchart TD
+    subgraph Client
+        web["Web / API client"]
+    end
+
+    web -->|"HTTPS"| agent["Agent container<br/>Strands agent, BedrockAgentCoreApp contract"]
+
+    cognito["Cognito<br/>(JWT: role, org)"] -.->|"bearer token"| web
+    cognito -.->|"validates"| agent
+    cognito -.->|"validates"| gw
+
+    agent -->|"MCP, bearer JWT"| gw["AgentCore Gateway"]
+    gw --> policy{"AgentCore Policy<br/>Cedar, ENFORCE<br/>default-deny"}
+
+    policy -->|"allow"| lengine["Lambda: engine tools<br/>audit_case, check_code_pair, ..."]
+    policy -->|"allow"| lcase["Lambda: case tools<br/>get_case, save_extraction, draft_action"]
+    policy -->|"allow"| lactions["Lambda: action tools<br/>send_dispute_letter, submit_fap_application, ..."]
+    policy -->|"deny (default)"| denied["-32002 Tool Execution Denied"]
+
+    lengine --> ddb[("DynamoDB<br/>cc-cases")]
+    lcase --> ddb
+    lcase --> s3[("S3<br/>uploads / evidence / letters")]
+    lactions --> ddb
+    lactions -->|"VerifyMac / GenerateMac"| kms[("KMS<br/>HMAC signer")]
+    lactions -->|"send"| ses["SES"]
+    lactions -->|"schedule"| sched["EventBridge Scheduler"]
+    sched --> followup["Lambda: followup"] -->|"M2M JWT"| agent
+
+    refdata[("refdata.sqlite<br/>built from CMS/HHS sources")] --> lengine
+
+    style denied fill:#fee,stroke:#c00
