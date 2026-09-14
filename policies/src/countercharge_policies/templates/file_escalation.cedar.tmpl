@@ -1,0 +1,11 @@
+permit(
+  principal,
+  action == AgentCore::Action::"actions___file_escalation",
+  resource == AgentCore::Gateway::"${gateway_arn}"
+)
+when {
+  principal.hasTag("role") &&
+  ["advocate", "system"].contains(principal.getTag("role")) &&
+  context.input.approval_token != "" &&
+  !context.input.finding_ids.isEmpty()
+};

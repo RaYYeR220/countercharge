@@ -1,0 +1,15 @@
+permit(
+  principal,
+  action in [
+    AgentCore::Action::"engine___audit_case",
+    AgentCore::Action::"engine___check_code_pair",
+    AgentCore::Action::"engine___check_units",
+    AgentCore::Action::"engine___fap_eligibility",
+    AgentCore::Action::"engine___hospital_price",
+    AgentCore::Action::"engine___explain_rule"
+  ],
+  resource == AgentCore::Gateway::"${gateway_arn}"
+)
+when {
+  principal.hasTag("role")
+};

@@ -1,0 +1,13 @@
+permit(
+  principal,
+  action in [
+    AgentCore::Action::"case___get_case",
+    AgentCore::Action::"case___save_extraction",
+    AgentCore::Action::"case___draft_action"
+  ],
+  resource == AgentCore::Gateway::"${gateway_arn}"
+)
+when {
+  principal.hasTag("role") &&
+  ["patient", "advocate", "system"].contains(principal.getTag("role"))
+};

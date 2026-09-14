@@ -1,0 +1,14 @@
+permit(
+  principal,
+  action in [
+    AgentCore::Action::"actions___submit_fap_application",
+    AgentCore::Action::"actions___request_itemized_bill"
+  ],
+  resource == AgentCore::Gateway::"${gateway_arn}"
+)
+when {
+  principal.hasTag("role") &&
+  ["patient", "advocate", "system"].contains(principal.getTag("role")) &&
+  context.input.approval_token != "" &&
+  ${recipient_allowed}
+};

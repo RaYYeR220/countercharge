@@ -1,0 +1,16 @@
+permit(
+  principal,
+  action == AgentCore::Action::"actions___send_dispute_letter",
+  resource == AgentCore::Gateway::"${gateway_arn}"
+)
+when {
+  principal.hasTag("role") &&
+  ["patient", "advocate", "system"].contains(principal.getTag("role")) &&
+  context.input.approval_token != "" &&
+  !context.input.finding_ids.isEmpty() &&
+  ${recipient_allowed} &&
+  (
+    context.input.disputed_amount_cents <= 1000000 ||
+    principal.getTag("role") == "advocate"
+  )
+};

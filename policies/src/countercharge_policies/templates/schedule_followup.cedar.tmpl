@@ -1,0 +1,11 @@
+permit(
+  principal,
+  action == AgentCore::Action::"actions___schedule_followup",
+  resource == AgentCore::Gateway::"${gateway_arn}"
+)
+when {
+  principal.hasTag("role") &&
+  ["patient", "advocate", "system"].contains(principal.getTag("role")) &&
+  context.input.days >= 1 &&
+  context.input.days <= 90
+};

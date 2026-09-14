@@ -1,0 +1,18 @@
+forbid(
+  principal,
+  action in [
+    AgentCore::Action::"case___get_case",
+    AgentCore::Action::"case___save_extraction",
+    AgentCore::Action::"case___draft_action",
+    AgentCore::Action::"actions___send_dispute_letter",
+    AgentCore::Action::"actions___submit_fap_application",
+    AgentCore::Action::"actions___request_itemized_bill",
+    AgentCore::Action::"actions___file_escalation",
+    AgentCore::Action::"actions___schedule_followup"
+  ],
+  resource == AgentCore::Gateway::"${gateway_arn}"
+)
+when {
+  principal.hasTag("role") &&
+  principal.getTag("role") == "integrator"
+};
