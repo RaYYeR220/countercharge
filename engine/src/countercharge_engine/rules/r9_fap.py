@@ -31,12 +31,15 @@ def evaluate_fap(ctx: AuditContext) -> FapResult | None:
 
     if fap.free_max_fpl is not None and pct <= fap.free_max_fpl:
         tier = FapTier.FREE
-    elif fap.discount_max_fpl is not None and pct <= fap.discount_max_fpl:
-        tier = FapTier.DISCOUNT
-    elif fap.free_max_fpl is None and fap.discount_max_fpl is None:
-        tier = FapTier.UNKNOWN
+    elif fap.discount_max_fpl is not None:
+        # Free-care threshold either doesn't cover this household or isn't
+        # published; the discount threshold is, so it settles the question.
+        tier = FapTier.DISCOUNT if pct <= fap.discount_max_fpl else FapTier.NONE
     else:
-        tier = FapTier.NONE
+        # No discount threshold is published, so we can't tell whether one
+        # exists that would cover this household -- that's unknown, not a
+        # confirmed "no assistance available".
+        tier = FapTier.UNKNOWN
 
     return FapResult(
         hospital_id=provider.hospital_id,

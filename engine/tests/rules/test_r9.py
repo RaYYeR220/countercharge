@@ -143,6 +143,23 @@ def test_above_all_thresholds_is_none():
     assert check(_ctx(bill, household, refdata)) == []
 
 
+def test_free_known_discount_unknown_above_free_is_unknown():
+    # The hospital's policy only discloses a free-care threshold; whether a
+    # discount tier exists above it (and covers this household) simply isn't
+    # published. That's "we don't know", not "definitely nothing" -- the
+    # household must not be told they have no assistance option when the
+    # hospital's own data is just incomplete.
+    bill = _bill()
+    household = Household(size=1, annual_income_cents=6_000_000, state="TX")
+    refdata = _refdata(_fap(free_max_fpl=250, discount_max_fpl=None))
+
+    result = evaluate_fap(_ctx(bill, household, refdata))
+    assert result.fpl_percent == 375
+    assert result.tier == FapTier.UNKNOWN
+
+    assert check(_ctx(bill, household, refdata)) == []
+
+
 def test_no_household_no_result():
     bill = _bill()
     refdata = _refdata(_fap(free_max_fpl=250, discount_max_fpl=400))
