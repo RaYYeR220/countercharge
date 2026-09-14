@@ -51,7 +51,17 @@ def _refdata(mue_edits):
     )
 
 
-def test_excess_units_fires_with_amount_times_unit_charge():
+def test_no_mue_row_no_finding():
+    lines = [_line("l1", units=5, charge=50000)]
+    refdata = _refdata([])
+
+    assert check(_ctx(lines, refdata)) == []
+
+
+# --- MAI 2/3: date-of-service edit -- units summed across every line -------
+
+
+def test_mai2_excess_units_fires_with_amount_times_unit_charge():
     lines = [_line("l1", units=3, charge=30000)]
     refdata = _refdata([MueEdit(code="96374", mue_value=1, mai=2, rationale="policy")])
 
@@ -66,14 +76,14 @@ def test_excess_units_fires_with_amount_times_unit_charge():
     assert finding.evidence["mai"] == 2
 
 
-def test_exactly_at_mue_no_finding():
+def test_mai2_exactly_at_mue_no_finding():
     lines = [_line("l1", units=1, charge=10000)]
     refdata = _refdata([MueEdit(code="96374", mue_value=1, mai=2, rationale="policy")])
 
     assert check(_ctx(lines, refdata)) == []
 
 
-def test_units_split_across_two_lines_summed():
+def test_mai2_units_split_across_two_lines_summed():
     lines = [
         _line("l1", units=2, charge=20000),
         _line("l2", units=1, charge=10000),
@@ -88,8 +98,79 @@ def test_units_split_across_two_lines_summed():
     assert finding.amount_cents == 20000
 
 
-def test_no_mue_row_no_finding():
-    lines = [_line("l1", units=5, charge=50000)]
-    refdata = _refdata([])
+def test_mai3_units_split_across_two_lines_summed():
+    lines = [
+        _line("l1", units=2, charge=20000),
+        _line("l2", units=1, charge=10000),
+    ]
+    refdata = _refdata([MueEdit(code="96374", mue_value=1, mai=3, rationale="medically unlikely")])
+
+    findings = check(_ctx(lines, refdata))
+
+    assert len(findings) == 1
+    finding = findings[0]
+    assert set(finding.line_ids) == {"l1", "l2"}
+    assert finding.amount_cents == 20000
+    assert finding.evidence["mai"] == 3
+
+
+# --- MAI 1: claim line edit -- each line compared to the MUE separately ----
+
+
+def test_mai1_units_split_across_two_lines_each_under_mue_no_finding():
+    # Real CMS MAI-1 adjudication never sums units across lines; two lines
+    # each individually at/under the MUE value never fires, even though
+    # their sum (3) is above it.
+    lines = [
+        _line("l1", units=2, charge=20000),
+        _line("l2", units=1, charge=10000),
+    ]
+    refdata = _refdata([MueEdit(code="96374", mue_value=2, mai=1, rationale="claim line edit")])
 
     assert check(_ctx(lines, refdata)) == []
+
+
+def test_mai1_single_line_over_mue_fires_on_that_line_only():
+    lines = [_line("l1", units=3, charge=30000)]
+    refdata = _refdata([MueEdit(code="96374", mue_value=1, mai=1, rationale="claim line edit")])
+
+    findings = check(_ctx(lines, refdata))
+
+    assert len(findings) == 1
+    finding = findings[0]
+    assert finding.rule_id == RULE_ID
+    assert finding.disputable is True
+    assert finding.line_ids == ["l1"]
+    # excess_units (2) * that line's own unit charge (30000 / 3 = 10000)
+    assert finding.amount_cents == 20000
+    assert finding.evidence["mai"] == 1
+
+
+def test_mai1_only_offending_line_fires_when_split_across_two_lines():
+    lines = [
+        _line("l1", units=3, charge=30000),  # over the MUE value of 1
+        _line("l2", units=1, charge=10000),  # at the MUE value -- no finding
+    ]
+    refdata = _refdata([MueEdit(code="96374", mue_value=1, mai=1, rationale="claim line edit")])
+
+    findings = check(_ctx(lines, refdata))
+
+    assert len(findings) == 1
+    finding = findings[0]
+    assert finding.line_ids == ["l1"]
+    assert finding.amount_cents == 20000
+
+
+def test_mai1_two_offending_lines_fire_as_two_separate_findings():
+    lines = [
+        _line("l1", units=3, charge=30000),
+        _line("l2", units=2, charge=20000),
+    ]
+    refdata = _refdata([MueEdit(code="96374", mue_value=1, mai=1, rationale="claim line edit")])
+
+    findings = check(_ctx(lines, refdata))
+
+    assert len(findings) == 2
+    by_line = {f.line_ids[0]: f for f in findings}
+    assert by_line["l1"].amount_cents == 20000
+    assert by_line["l2"].amount_cents == 10000
