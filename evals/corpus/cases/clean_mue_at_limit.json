@@ -1,0 +1,59 @@
+{
+  "adversarial_text": null,
+  "bill": {
+    "account_no": "NYP-2026-100033",
+    "lines": [
+      {
+        "charge_cents": 185000,
+        "code": "99284",
+        "code_type": "CPT",
+        "description": "Emergency department visit, level 4",
+        "dos": "2026-10-11",
+        "line_id": "L1",
+        "modifiers": [],
+        "rev_code": "0450",
+        "units": 1
+      },
+      {
+        "charge_cents": 350000,
+        "code": "A0425",
+        "code_type": "HCPCS",
+        "description": "Ground mileage",
+        "dos": "2026-10-11",
+        "line_id": "L2",
+        "modifiers": [],
+        "rev_code": "0540",
+        "units": 250
+      }
+    ],
+    "pos": null,
+    "provider": {
+      "billing_email_domain": "nyp.org",
+      "ein": "13-1000033",
+      "hospital_id": "nyp",
+      "name": "NewYork-Presbyterian Hospital",
+      "nonprofit": true,
+      "npi": "1800000033"
+    },
+    "self_pay": false,
+    "setting": "ER",
+    "statement_date": "2026-11-01",
+    "totals": {
+      "adjustments_cents": 0,
+      "charges_cents": 535000,
+      "patient_balance_cents": 535000,
+      "payments_cents": 0
+    }
+  },
+  "case_id": "clean_mue_at_limit",
+  "category": "CLEAN",
+  "eob": null,
+  "gfe": null,
+  "household": null,
+  "layout": "bill_modern",
+  "patient": {
+    "email": "daniel.chen33@example.net",
+    "name": "Daniel Chen",
+    "state": "NY"
+  }
+}

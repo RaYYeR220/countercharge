@@ -1,0 +1,70 @@
+{
+  "adversarial_text": null,
+  "bill": {
+    "account_no": "NYP-2026-100004",
+    "lines": [
+      {
+        "charge_cents": 72000,
+        "code": "99283",
+        "code_type": "CPT",
+        "description": "Emergency department visit, level 3",
+        "dos": "2026-06-17",
+        "line_id": "L1",
+        "modifiers": [],
+        "rev_code": "0450",
+        "units": 1
+      },
+      {
+        "charge_cents": 145000,
+        "code": "12002",
+        "code_type": "CPT",
+        "description": "Wound repair, simple, medium",
+        "dos": "2026-06-17",
+        "line_id": "L2",
+        "modifiers": [],
+        "rev_code": "0761",
+        "units": 1
+      },
+      {
+        "charge_cents": 98000,
+        "code": "12001",
+        "code_type": "CPT",
+        "description": "Wound repair, simple, small",
+        "dos": "2026-06-17",
+        "line_id": "L3",
+        "modifiers": [],
+        "rev_code": "0761",
+        "units": 1
+      }
+    ],
+    "pos": null,
+    "provider": {
+      "billing_email_domain": "nyp.org",
+      "ein": "13-1000004",
+      "hospital_id": "nyp",
+      "name": "NewYork-Presbyterian Hospital",
+      "nonprofit": true,
+      "npi": "1800000004"
+    },
+    "self_pay": false,
+    "setting": "ER",
+    "statement_date": "2026-07-08",
+    "totals": {
+      "adjustments_cents": 0,
+      "charges_cents": 315000,
+      "patient_balance_cents": 315000,
+      "payments_cents": 0
+    }
+  },
+  "case_id": "ncci_ptp_modind0_01",
+  "category": "NCCI_PTP",
+  "eob": null,
+  "gfe": null,
+  "household": null,
+  "layout": "bill_statement",
+  "patient": {
+    "email": "jessica.jackson4@example.net",
+    "name": "Jessica Jackson",
+    "state": "NY"
+  }
+}

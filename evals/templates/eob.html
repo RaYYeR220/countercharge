@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>EOB {{ eob.claim_no }}</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: Arial, Helvetica, sans-serif; color: #111; background: #fff; margin: 0; padding: 36px 44px; font-size: 13px; }
+  .header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 3px solid #1b3a5c; padding-bottom: 10px; margin-bottom: 18px; }
+  .header h1 { margin: 0; font-size: 19px; color: #1b3a5c; }
+  .header .doctitle { text-align: right; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; color: #1b3a5c; }
+  .header .doctitle .not-a-bill { font-size: 10px; font-weight: normal; color: #b00020; text-transform: none; display: block; margin-top: 3px; }
+  .meta table { border-collapse: collapse; font-size: 12px; margin-bottom: 16px; }
+  .meta td { padding: 2px 12px 2px 0; }
+  .meta .label { color: #555; }
+  table.items { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 14px; }
+  table.items th { text-align: left; background: #eef2f6; padding: 7px 8px; font-size: 10.5px; text-transform: uppercase; }
+  table.items td { padding: 7px 8px; border-bottom: 1px solid #e4e6ea; }
+  table.items td.num, table.items th.num { text-align: right; }
+  .summary { width: 320px; margin-left: auto; border-collapse: collapse; font-size: 12.5px; }
+  .summary td { padding: 4px 8px; }
+  .summary td.num { text-align: right; }
+  .summary tr.total td { border-top: 2px solid #1b3a5c; font-weight: bold; font-size: 14px; color: #1b3a5c; }
+  .note { margin-top: 20px; font-size: 10.5px; color: #666; border-top: 1px solid #ddd; padding-top: 8px; }
+</style>
+</head>
+<body>
+  <div class="header">
+    <div>
+      <h1>{{ eob.payer }}</h1>
+      <div style="font-size:11px;color:#555;">Explanation of Benefits</div>
+    </div>
+    <div class="doctitle">EOB<span class="not-a-bill">THIS IS NOT A BILL</span></div>
+  </div>
+
+  <div class="meta">
+    <table>
+      <tr><td class="label">Patient</td><td>{{ patient.name }}</td></tr>
+      <tr><td class="label">Claim Number</td><td>{{ eob.claim_no }}</td></tr>
+      <tr><td class="label">Provider</td><td>{{ hospital.name }}</td></tr>
+      <tr><td class="label">Network Status</td><td>{{ "In-Network" if eob.network == "IN" else "Out-of-Network" }}</td></tr>
+      <tr><td class="label">Emergency Claim</td><td>{{ "Yes" if eob.emergency else "No" }}</td></tr>
+    </table>
+  </div>
+
+  <table class="items">
+    <thead>
+      <tr><th>Date</th><th>Code</th><th class="num">Billed</th><th class="num">Allowed</th><th class="num">Plan Paid</th><th class="num">Patient Resp.</th></tr>
+    </thead>
+    <tbody>
+      {% for l in eob.lines %}
+      <tr>
+        <td>{{ l.dos }}</td>
+        <td>{{ l.code }}</td>
+        <td class="num">{{ l.billed_cents|usd }}</td>
+        <td class="num">{{ l.allowed_cents|usd }}</td>
+        <td class="num">{{ l.plan_paid_cents|usd }}</td>
+        <td class="num">{{ l.patient_resp_cents|usd }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <table class="summary">
+    <tr class="total"><td>Total Patient Responsibility</td><td class="num">{{ eob.total_patient_resp_cents|usd }}</td></tr>
+  </table>
+
+  <div class="note">
+    This explanation of benefits shows how your claim was processed. If your provider bills you more than the
+    patient responsibility shown above for an in-network or protected out-of-network claim, you may have the
+    right to dispute the difference.
+  </div>
+</body>
+</html>

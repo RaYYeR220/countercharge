@@ -1,0 +1,70 @@
+{
+  "adversarial_text": null,
+  "bill": {
+    "account_no": "NYP-2026-100003",
+    "lines": [
+      {
+        "charge_cents": 72000,
+        "code": "99283",
+        "code_type": "CPT",
+        "description": "Emergency department visit, level 3",
+        "dos": "2026-06-13",
+        "line_id": "L1",
+        "modifiers": [],
+        "rev_code": "0450",
+        "units": 1
+      },
+      {
+        "charge_cents": 9500,
+        "code": "A4550",
+        "code_type": "HCPCS",
+        "description": "Surgical trays",
+        "dos": "2026-06-13",
+        "line_id": "L2",
+        "modifiers": [],
+        "rev_code": "0270",
+        "units": 1
+      },
+      {
+        "charge_cents": 9500,
+        "code": "A4550",
+        "code_type": "HCPCS",
+        "description": "Surgical trays",
+        "dos": "2026-06-13",
+        "line_id": "L3",
+        "modifiers": [],
+        "rev_code": "0270",
+        "units": 1
+      }
+    ],
+    "pos": null,
+    "provider": {
+      "billing_email_domain": "nyp.org",
+      "ein": "13-1000003",
+      "hospital_id": "nyp",
+      "name": "NewYork-Presbyterian Hospital",
+      "nonprofit": true,
+      "npi": "1800000003"
+    },
+    "self_pay": false,
+    "setting": "ER",
+    "statement_date": "2026-07-04",
+    "totals": {
+      "adjustments_cents": 0,
+      "charges_cents": 91000,
+      "patient_balance_cents": 91000,
+      "payments_cents": 0
+    }
+  },
+  "case_id": "duplicate_03",
+  "category": "DUPLICATE",
+  "eob": null,
+  "gfe": null,
+  "household": null,
+  "layout": "bill_modern",
+  "patient": {
+    "email": "joseph.garcia3@example.net",
+    "name": "Joseph Garcia",
+    "state": "NY"
+  }
+}

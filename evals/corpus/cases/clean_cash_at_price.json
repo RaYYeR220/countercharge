@@ -1,0 +1,59 @@
+{
+  "adversarial_text": null,
+  "bill": {
+    "account_no": "NYP-2026-100039",
+    "lines": [
+      {
+        "charge_cents": 117100,
+        "code": "71046",
+        "code_type": "CPT",
+        "description": "Chest X-ray, two views",
+        "dos": "2026-11-04",
+        "line_id": "L1",
+        "modifiers": [],
+        "rev_code": "0320",
+        "units": 1
+      },
+      {
+        "charge_cents": 11900,
+        "code": "82310",
+        "code_type": "CPT",
+        "description": "Blood calcium test",
+        "dos": "2026-11-04",
+        "line_id": "L2",
+        "modifiers": [],
+        "rev_code": "0301",
+        "units": 1
+      }
+    ],
+    "pos": null,
+    "provider": {
+      "billing_email_domain": "nyp.org",
+      "ein": "13-1000039",
+      "hospital_id": "nyp",
+      "name": "NewYork-Presbyterian Hospital",
+      "nonprofit": true,
+      "npi": "1800000039"
+    },
+    "self_pay": true,
+    "setting": "OUTPATIENT",
+    "statement_date": "2026-11-25",
+    "totals": {
+      "adjustments_cents": 0,
+      "charges_cents": 129000,
+      "patient_balance_cents": 129000,
+      "payments_cents": 0
+    }
+  },
+  "case_id": "clean_cash_at_price",
+  "category": "CLEAN",
+  "eob": null,
+  "gfe": null,
+  "household": null,
+  "layout": "bill_modern",
+  "patient": {
+    "email": "james.robinson39@example.net",
+    "name": "James Robinson",
+    "state": "NY"
+  }
+}

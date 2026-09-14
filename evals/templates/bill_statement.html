@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Statement {{ account_no }}</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: "Courier New", Consolas, monospace; color: #111; background: #fff; margin: 0; padding: 30px 40px; font-size: 12.5px; }
+  .top { display: flex; justify-content: space-between; border: 1px solid #111; padding: 10px 14px; margin-bottom: 14px; }
+  .top h1 { font-size: 16px; margin: 0 0 3px; }
+  .top .sub { font-size: 10.5px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; border: 1px solid #111; border-top: none; margin-bottom: 14px; }
+  .grid div { padding: 6px 10px; border-right: 1px solid #ccc; border-bottom: 1px solid #ccc; }
+  .grid div:last-child { border-right: none; }
+  .grid .k { font-size: 9.5px; text-transform: uppercase; color: #555; }
+  .grid .v { font-weight: bold; }
+  table.items { width: 100%; border-collapse: collapse; font-size: 11.5px; margin-bottom: 12px; }
+  table.items th, table.items td { border: 1px solid #999; padding: 4px 6px; }
+  table.items th { background: #eee; text-align: left; }
+  table.items td.num, table.items th.num { text-align: right; }
+  .totals { width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 14px; }
+  .totals td { padding: 3px 6px; }
+  .totals td.num { text-align: right; }
+  .totals tr.balance td { border-top: 2px solid #111; font-weight: bold; font-size: 14px; }
+  .respbox { border: 2px solid #111; padding: 8px 12px; margin-bottom: 14px; display: flex; justify-content: space-between; }
+  .respbox .amt { font-weight: bold; font-size: 16px; }
+  .memo { font-size: 11px; border: 1px dashed #777; padding: 6px 10px; margin-bottom: 12px; }
+  .stamp { display: inline-block; transform: rotate(-7deg); border: 3px solid #a00; color: #a00; font-weight: bold; font-size: 14px; padding: 5px 12px; text-transform: uppercase; margin-bottom: 12px; }
+  .hidden-note { color: #ffffff; background: #ffffff; font-size: 6px; user-select: none; }
+  .scissors { text-align: center; font-size: 10px; color: #888; letter-spacing: 4px; margin: 18px 0 6px; border-top: 1px dashed #888; padding-top: 4px; }
+  .coupon { border: 1px solid #111; padding: 10px 14px; font-size: 11px; }
+  .coupon .row { display: flex; justify-content: space-between; margin-bottom: 4px; }
+</style>
+</head>
+<body>
+  <div class="top">
+    <div>
+      <h1>{{ hospital.name }}</h1>
+      <div class="sub">Patient Financial Services &middot; {{ hospital.billing_email_domain }}</div>
+    </div>
+    <div class="sub">PATIENT STATEMENT</div>
+  </div>
+
+  <div class="grid">
+    <div><div class="k">Patient</div><div class="v">{{ patient.name }}</div></div>
+    <div><div class="k">Account No.</div><div class="v">{{ account_no }}</div></div>
+    <div><div class="k">Statement Date</div><div class="v">{{ statement_date }}</div></div>
+    <div><div class="k">Service Dates</div><div class="v">{{ dos_from }} to {{ dos_to }}</div></div>
+    <div><div class="k">Setting</div><div class="v">{{ setting|title }}</div></div>
+    <div><div class="k">Billing Status</div><div class="v">{{ "Self-Pay" if self_pay else "Insurance on file" }}</div></div>
+  </div>
+
+  {% if stamp_text %}<div class="stamp">{{ stamp_text }}</div>{% endif %}
+
+  <table class="items">
+    <thead>
+      <tr><th>Date</th><th>Rev</th><th>Code</th><th>Description</th><th class="num">Units</th><th class="num">Charge</th></tr>
+    </thead>
+    <tbody>
+      {% for l in lines %}
+      <tr>
+        <td>{{ l.dos }}</td>
+        <td>{{ l.rev_code }}</td>
+        <td>{{ l.code }}{% if l.modifiers %}-{{ l.modifiers|join('-') }}{% endif %}</td>
+        <td>{{ l.description }}</td>
+        <td class="num">{{ l.units }}</td>
+        <td class="num">{{ l.charge_cents|usd }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <table class="totals">
+    <tr><td>Total Charges</td><td class="num">{{ totals.charges_cents|usd }}</td></tr>
+    <tr><td>Adjustments</td><td class="num">-{{ totals.adjustments_cents|usd }}</td></tr>
+    <tr><td>Payments</td><td class="num">-{{ totals.payments_cents|usd }}</td></tr>
+    <tr class="balance"><td>PATIENT BALANCE</td><td class="num">{{ totals.patient_balance_cents|usd }}</td></tr>
+  </table>
+
+  <div class="respbox">
+    <div>AMOUNT DUE FROM PATIENT</div>
+    <div class="amt">{{ totals.patient_balance_cents|usd }}</div>
+  </div>
+
+  {% if memo_text %}<div class="memo">{{ memo_text }}</div>{% endif %}
+  {% if hidden_text %}<div class="hidden-note">{{ hidden_text }}</div>{% endif %}
+
+  <div class="scissors">&#9986; - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</div>
+  <div class="coupon">
+    <div class="row"><span>Return this portion with payment</span><span>Acct {{ account_no }}</span></div>
+    <div class="row"><span>Amount Enclosed: ______________</span><span>Amount Due: {{ totals.patient_balance_cents|usd }}</span></div>
+    <div class="row"><span>Billing inquiries: {% if altered_contact %}{{ altered_contact }}{% else %}patientbilling@{{ hospital.billing_email_domain }}{% endif %}</span></div>
+  </div>
+</body>
+</html>

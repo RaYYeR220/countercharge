@@ -1,0 +1,26 @@
+[project]
+name = "countercharge-evals"
+version = "0.1.0"
+description = "Pre-registered evaluation corpus, renderer and engine scorecard for the Countercharge audit engine"
+requires-python = ">=3.11"
+dependencies = [
+    "countercharge-engine",
+    "pydantic>=2.8",
+    "jinja2>=3.1",
+    "playwright>=1.45",
+]
+
+[tool.uv.sources]
+countercharge-engine = { path = "../engine" }
+
+[dependency-groups]
+dev = [
+    "pytest>=8",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/countercharge_evals"]

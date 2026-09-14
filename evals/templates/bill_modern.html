@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Statement {{ account_no }}</title>
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", Arial, Helvetica, sans-serif; color: #1a1a1a; background: #f4f6f8; margin: 0; padding: 0 0 40px; font-size: 13px; }
+  .header { background: #0b5aa1; color: #fff; padding: 28px 44px 20px; display: flex; justify-content: space-between; }
+  .header h1 { margin: 0 0 4px; font-size: 21px; font-weight: 600; }
+  .header .sub { font-size: 12px; opacity: .85; }
+  .header .badge { align-self: flex-start; background: rgba(255,255,255,.15); border-radius: 4px; padding: 6px 12px; font-size: 12px; text-transform: uppercase; letter-spacing: .5px; }
+  .wrap { padding: 24px 44px 0; }
+  .cards { display: flex; gap: 16px; margin-bottom: 20px; }
+  .card { background: #fff; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,.08); padding: 14px 16px; flex: 1; }
+  .card .k { font-size: 10px; text-transform: uppercase; color: #6b7280; letter-spacing: .5px; margin-bottom: 3px; }
+  .card .v { font-size: 14px; font-weight: 600; }
+  table.items { width: 100%; border-collapse: collapse; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,.08); margin-bottom: 18px; }
+  table.items th { text-align: left; background: #eef2f6; color: #4b5563; font-size: 10.5px; text-transform: uppercase; letter-spacing: .4px; padding: 9px 12px; }
+  table.items td { padding: 9px 12px; border-top: 1px solid #eef0f2; font-size: 12.5px; }
+  table.items td.num, table.items th.num { text-align: right; }
+  .summary { display: flex; justify-content: flex-end; }
+  table.totals { border-collapse: collapse; font-size: 12.5px; width: 300px; background: #fff; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+  .totals td { padding: 8px 14px; }
+  .totals td.num { text-align: right; }
+  .totals tr.balance td { border-top: 2px solid #0b5aa1; font-weight: 700; font-size: 15px; color: #0b5aa1; }
+  .respbox { margin-top: 18px; background: #0b5aa1; color: #fff; border-radius: 8px; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; }
+  .respbox .amt { font-size: 22px; font-weight: 700; }
+  .memo { margin-top: 16px; font-size: 11.5px; color: #7a5b00; background: #fff7e0; border: 1px solid #f0dca0; border-radius: 6px; padding: 9px 12px; }
+  .stamp { display: inline-block; transform: rotate(-6deg); border: 3px solid #c0392b; color: #c0392b; font-weight: 800; font-size: 15px; padding: 6px 14px; text-transform: uppercase; letter-spacing: 1px; margin: 6px 0 16px; border-radius: 4px; }
+  .hidden-note { color: #ffffff; background: #ffffff; font-size: 6px; user-select: none; }
+  .coupon { margin-top: 22px; padding-top: 12px; border-top: 2px dashed #c8ccd2; display: flex; justify-content: space-between; font-size: 11px; color: #4b5563; }
+  .footer-note { margin-top: 10px; font-size: 10px; color: #9aa1aa; }
+</style>
+</head>
+<body>
+  <div class="header">
+    <div>
+      <h1>{{ hospital.name }}</h1>
+      <div class="sub">Patient Financial Services &middot; {{ hospital.billing_email_domain }}</div>
+    </div>
+    <div class="badge">Statement</div>
+  </div>
+  <div class="wrap">
+    <div class="cards">
+      <div class="card"><div class="k">Patient</div><div class="v">{{ patient.name }}</div></div>
+      <div class="card"><div class="k">Account</div><div class="v">{{ account_no }}</div></div>
+      <div class="card"><div class="k">Statement Date</div><div class="v">{{ statement_date }}</div></div>
+      <div class="card"><div class="k">Service Dates</div><div class="v">{{ dos_from }} &ndash; {{ dos_to }}</div></div>
+    </div>
+
+    {% if stamp_text %}<div class="stamp">{{ stamp_text }}</div>{% endif %}
+
+    <table class="items">
+      <thead>
+        <tr><th>Date</th><th>Rev Code</th><th>Code</th><th>Description</th><th class="num">Units</th><th class="num">Charge</th></tr>
+      </thead>
+      <tbody>
+        {% for l in lines %}
+        <tr>
+          <td>{{ l.dos }}</td>
+          <td>{{ l.rev_code }}</td>
+          <td>{{ l.code }}{% if l.modifiers %}-{{ l.modifiers|join('-') }}{% endif %}</td>
+          <td>{{ l.description }}</td>
+          <td class="num">{{ l.units }}</td>
+          <td class="num">{{ l.charge_cents|usd }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="summary">
+      <table class="totals">
+        <tr><td>Total Charges</td><td class="num">{{ totals.charges_cents|usd }}</td></tr>
+        <tr><td>Adjustments</td><td class="num">-{{ totals.adjustments_cents|usd }}</td></tr>
+        <tr><td>Payments</td><td class="num">-{{ totals.payments_cents|usd }}</td></tr>
+        <tr class="balance"><td>Patient Balance</td><td class="num">{{ totals.patient_balance_cents|usd }}</td></tr>
+      </table>
+    </div>
+
+    <div class="respbox">
+      <div>Amount Due From Patient</div>
+      <div class="amt">{{ totals.patient_balance_cents|usd }}</div>
+    </div>
+
+    {% if memo_text %}<div class="memo">{{ memo_text }}</div>{% endif %}
+    {% if hidden_text %}<div class="hidden-note">{{ hidden_text }}</div>{% endif %}
+
+    <div class="coupon">
+      <div>Billing inquiries: {% if altered_contact %}{{ altered_contact }}{% else %}patientbilling@{{ hospital.billing_email_domain }}{% endif %}</div>
+      <div>Detach and return with payment &middot; Acct {{ account_no }}</div>
+    </div>
+    <div class="footer-note">This is a summary of charges for services rendered. Retain for your records.</div>
+  </div>
+</body>
+</html>

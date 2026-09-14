@@ -1,0 +1,59 @@
+{
+  "adversarial_text": null,
+  "bill": {
+    "account_no": "NYP-2026-100012",
+    "lines": [
+      {
+        "charge_cents": 72000,
+        "code": "99283",
+        "code_type": "CPT",
+        "description": "Emergency department visit, level 3",
+        "dos": "2026-07-19",
+        "line_id": "L1",
+        "modifiers": [],
+        "rev_code": "0450",
+        "units": 1
+      },
+      {
+        "charge_cents": 6000,
+        "code": "36415",
+        "code_type": "CPT",
+        "description": "Blood draw",
+        "dos": "2026-07-19",
+        "line_id": "L2",
+        "modifiers": [],
+        "rev_code": "0300",
+        "units": 1
+      }
+    ],
+    "pos": null,
+    "provider": {
+      "billing_email_domain": "nyp.org",
+      "ein": "13-1000012",
+      "hospital_id": "nyp",
+      "name": "NewYork-Presbyterian Hospital",
+      "nonprofit": true,
+      "npi": "1800000012"
+    },
+    "self_pay": false,
+    "setting": "ER",
+    "statement_date": "2026-08-09",
+    "totals": {
+      "adjustments_cents": 0,
+      "charges_cents": 78000,
+      "patient_balance_cents": 80000,
+      "payments_cents": 10000
+    }
+  },
+  "case_id": "arithmetic_balance_02",
+  "category": "ARITHMETIC",
+  "eob": null,
+  "gfe": null,
+  "household": null,
+  "layout": "bill_modern",
+  "patient": {
+    "email": "lisa.walker12@example.net",
+    "name": "Lisa Walker",
+    "state": "NY"
+  }
+}

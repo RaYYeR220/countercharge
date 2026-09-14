@@ -1,0 +1,85 @@
+{
+  "adversarial_text": null,
+  "bill": {
+    "account_no": "CCF-2026-100030",
+    "lines": [
+      {
+        "charge_cents": 95000,
+        "code": "12011",
+        "code_type": "CPT",
+        "description": "Wound repair, simple, face",
+        "dos": "2026-09-29",
+        "line_id": "L1",
+        "modifiers": [],
+        "rev_code": "0761",
+        "units": 1
+      },
+      {
+        "charge_cents": 105000,
+        "code": "12011",
+        "code_type": "CPT",
+        "description": "Wound repair, simple, face",
+        "dos": "2026-09-29",
+        "line_id": "L2",
+        "modifiers": [],
+        "rev_code": "0761",
+        "units": 1
+      },
+      {
+        "charge_cents": 150000,
+        "code": "71046",
+        "code_type": "CPT",
+        "description": "Chest X-ray, two views",
+        "dos": "2026-09-29",
+        "line_id": "L3",
+        "modifiers": [],
+        "rev_code": "0320",
+        "units": 1
+      },
+      {
+        "charge_cents": 150000,
+        "code": "71046",
+        "code_type": "CPT",
+        "description": "Chest X-ray, two views",
+        "dos": "2026-09-29",
+        "line_id": "L4",
+        "modifiers": [],
+        "rev_code": "0320",
+        "units": 1
+      }
+    ],
+    "pos": null,
+    "provider": {
+      "billing_email_domain": "clevelandclinic.org",
+      "ein": "13-1000030",
+      "hospital_id": "ccf",
+      "name": "Cleveland Clinic",
+      "nonprofit": true,
+      "npi": "1800000030"
+    },
+    "self_pay": false,
+    "setting": "ER",
+    "statement_date": "2026-10-20",
+    "totals": {
+      "adjustments_cents": 0,
+      "charges_cents": 520000,
+      "patient_balance_cents": 520000,
+      "payments_cents": 0
+    }
+  },
+  "case_id": "multi_03_fap_plus_disputes",
+  "category": "MULTI",
+  "eob": null,
+  "gfe": null,
+  "household": {
+    "annual_income_cents": 3500000,
+    "size": 3,
+    "state": "OH"
+  },
+  "layout": "bill_modern",
+  "patient": {
+    "email": "sarah.brown30@example.net",
+    "name": "Sarah Brown",
+    "state": "OH"
+  }
+}

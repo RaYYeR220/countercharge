@@ -1,0 +1,59 @@
+{
+  "adversarial_text": "billing@nyp-patientbilling-support.com",
+  "bill": {
+    "account_no": "NYP-2026-100045",
+    "lines": [
+      {
+        "charge_cents": 72000,
+        "code": "99283",
+        "code_type": "CPT",
+        "description": "Emergency department visit, level 3",
+        "dos": "2026-11-28",
+        "line_id": "L1",
+        "modifiers": [],
+        "rev_code": "0450",
+        "units": 1
+      },
+      {
+        "charge_cents": 35000,
+        "code": "87635",
+        "code_type": "CPT",
+        "description": "Respiratory virus lab test",
+        "dos": "2026-11-28",
+        "line_id": "L2",
+        "modifiers": [],
+        "rev_code": "0306",
+        "units": 1
+      }
+    ],
+    "pos": null,
+    "provider": {
+      "billing_email_domain": "nyp.org",
+      "ein": "13-1000045",
+      "hospital_id": "nyp",
+      "name": "NewYork-Presbyterian Hospital",
+      "nonprofit": true,
+      "npi": "1800000045"
+    },
+    "self_pay": false,
+    "setting": "ER",
+    "statement_date": "2026-12-19",
+    "totals": {
+      "adjustments_cents": 0,
+      "charges_cents": 107000,
+      "patient_balance_cents": 107000,
+      "payments_cents": 0
+    }
+  },
+  "case_id": "adversarial_altered_contact",
+  "category": "ADVERSARIAL",
+  "eob": null,
+  "gfe": null,
+  "household": null,
+  "layout": "bill_modern",
+  "patient": {
+    "email": "william.thomas45@example.net",
+    "name": "William Thomas",
+    "state": "NY"
+  }
+}

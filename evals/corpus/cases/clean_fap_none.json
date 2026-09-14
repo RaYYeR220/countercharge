@@ -1,0 +1,63 @@
+{
+  "adversarial_text": null,
+  "bill": {
+    "account_no": "CCF-2026-100037",
+    "lines": [
+      {
+        "charge_cents": 185000,
+        "code": "99284",
+        "code_type": "CPT",
+        "description": "Emergency department visit, level 4",
+        "dos": "2026-10-27",
+        "line_id": "L1",
+        "modifiers": [],
+        "rev_code": "0450",
+        "units": 1
+      },
+      {
+        "charge_cents": 18000,
+        "code": "85025",
+        "code_type": "CPT",
+        "description": "Complete blood count with differential",
+        "dos": "2026-10-27",
+        "line_id": "L2",
+        "modifiers": [],
+        "rev_code": "0305",
+        "units": 1
+      }
+    ],
+    "pos": null,
+    "provider": {
+      "billing_email_domain": "clevelandclinic.org",
+      "ein": "13-1000037",
+      "hospital_id": "ccf",
+      "name": "Cleveland Clinic",
+      "nonprofit": true,
+      "npi": "1800000037"
+    },
+    "self_pay": false,
+    "setting": "OUTPATIENT",
+    "statement_date": "2026-11-17",
+    "totals": {
+      "adjustments_cents": 0,
+      "charges_cents": 203000,
+      "patient_balance_cents": 203000,
+      "payments_cents": 0
+    }
+  },
+  "case_id": "clean_fap_none",
+  "category": "CLEAN",
+  "eob": null,
+  "gfe": null,
+  "household": {
+    "annual_income_cents": 20000000,
+    "size": 2,
+    "state": "OH"
+  },
+  "layout": "bill_statement",
+  "patient": {
+    "email": "mark.davis37@example.net",
+    "name": "Mark Davis",
+    "state": "OH"
+  }
+}

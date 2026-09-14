@@ -1,0 +1,73 @@
+{
+  "adversarial_text": null,
+  "bill": {
+    "account_no": "CCF-2026-100019",
+    "lines": [
+      {
+        "charge_cents": 240000,
+        "code": "99285",
+        "code_type": "CPT",
+        "description": "Emergency department visit, level 5",
+        "dos": "2026-08-16",
+        "line_id": "L1",
+        "modifiers": [],
+        "rev_code": "0450",
+        "units": 1
+      },
+      {
+        "charge_cents": 150000,
+        "code": "71046",
+        "code_type": "CPT",
+        "description": "Chest X-ray, two views",
+        "dos": "2026-08-16",
+        "line_id": "L2",
+        "modifiers": [],
+        "rev_code": "0320",
+        "units": 1
+      },
+      {
+        "charge_cents": 110000,
+        "code": "82310",
+        "code_type": "CPT",
+        "description": "Blood calcium test",
+        "dos": "2026-08-16",
+        "line_id": "L3",
+        "modifiers": [],
+        "rev_code": "0301",
+        "units": 1
+      }
+    ],
+    "pos": null,
+    "provider": {
+      "billing_email_domain": "clevelandclinic.org",
+      "ein": "13-1000019",
+      "hospital_id": "ccf",
+      "name": "Cleveland Clinic",
+      "nonprofit": true,
+      "npi": "1800000019"
+    },
+    "self_pay": true,
+    "setting": "ER",
+    "statement_date": "2026-09-06",
+    "totals": {
+      "adjustments_cents": 0,
+      "charges_cents": 500000,
+      "patient_balance_cents": 500000,
+      "payments_cents": 0
+    }
+  },
+  "case_id": "nsa_gfe_400_01",
+  "category": "NSA_GFE",
+  "eob": null,
+  "gfe": {
+    "date": "2026-08-06",
+    "total_cents": 460000
+  },
+  "household": null,
+  "layout": "bill_statement",
+  "patient": {
+    "email": "michael.young19@example.net",
+    "name": "Michael Young",
+    "state": "NY"
+  }
+}

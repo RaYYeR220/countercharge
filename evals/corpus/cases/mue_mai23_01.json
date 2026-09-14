@@ -1,0 +1,70 @@
+{
+  "adversarial_text": null,
+  "bill": {
+    "account_no": "CCF-2026-100008",
+    "lines": [
+      {
+        "charge_cents": 185000,
+        "code": "99284",
+        "code_type": "CPT",
+        "description": "Emergency department visit, level 4",
+        "dos": "2026-07-03",
+        "line_id": "L1",
+        "modifiers": [],
+        "rev_code": "0450",
+        "units": 1
+      },
+      {
+        "charge_cents": 98000,
+        "code": "12001",
+        "code_type": "CPT",
+        "description": "Wound repair, simple, small",
+        "dos": "2026-07-03",
+        "line_id": "L2",
+        "modifiers": [],
+        "rev_code": "0761",
+        "units": 1
+      },
+      {
+        "charge_cents": 105000,
+        "code": "12001",
+        "code_type": "CPT",
+        "description": "Wound repair, simple, small",
+        "dos": "2026-07-03",
+        "line_id": "L3",
+        "modifiers": [],
+        "rev_code": "0761",
+        "units": 1
+      }
+    ],
+    "pos": null,
+    "provider": {
+      "billing_email_domain": "clevelandclinic.org",
+      "ein": "13-1000008",
+      "hospital_id": "ccf",
+      "name": "Cleveland Clinic",
+      "nonprofit": true,
+      "npi": "1800000008"
+    },
+    "self_pay": false,
+    "setting": "ER",
+    "statement_date": "2026-07-24",
+    "totals": {
+      "adjustments_cents": 0,
+      "charges_cents": 388000,
+      "patient_balance_cents": 388000,
+      "payments_cents": 0
+    }
+  },
+  "case_id": "mue_mai23_01",
+  "category": "MUE",
+  "eob": null,
+  "gfe": null,
+  "household": null,
+  "layout": "bill_classic",
+  "patient": {
+    "email": "karen.thompson8@example.net",
+    "name": "Karen Thompson",
+    "state": "NY"
+  }
+}

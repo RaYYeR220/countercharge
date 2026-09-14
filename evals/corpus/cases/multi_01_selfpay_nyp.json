@@ -1,0 +1,84 @@
+{
+  "adversarial_text": null,
+  "bill": {
+    "account_no": "NYP-2026-100028",
+    "lines": [
+      {
+        "charge_cents": 420000,
+        "code": "A0425",
+        "code_type": "HCPCS",
+        "description": "Ground mileage",
+        "dos": "2026-09-21",
+        "line_id": "L1",
+        "modifiers": [],
+        "rev_code": "0540",
+        "units": 300
+      },
+      {
+        "charge_cents": 150000,
+        "code": "71046",
+        "code_type": "CPT",
+        "description": "Chest X-ray, two views",
+        "dos": "2026-09-21",
+        "line_id": "L2",
+        "modifiers": [],
+        "rev_code": "0320",
+        "units": 1
+      },
+      {
+        "charge_cents": 11300,
+        "code": "85025",
+        "code_type": "CPT",
+        "description": "Complete blood count with differential",
+        "dos": "2026-09-21",
+        "line_id": "L3",
+        "modifiers": [],
+        "rev_code": "0305",
+        "units": 1
+      },
+      {
+        "charge_cents": 11300,
+        "code": "85025",
+        "code_type": "CPT",
+        "description": "Complete blood count with differential",
+        "dos": "2026-09-21",
+        "line_id": "L4",
+        "modifiers": [],
+        "rev_code": "0305",
+        "units": 1
+      }
+    ],
+    "pos": null,
+    "provider": {
+      "billing_email_domain": "nyp.org",
+      "ein": "13-1000028",
+      "hospital_id": "nyp",
+      "name": "NewYork-Presbyterian Hospital",
+      "nonprofit": true,
+      "npi": "1800000028"
+    },
+    "self_pay": true,
+    "setting": "ER",
+    "statement_date": "2026-10-12",
+    "totals": {
+      "adjustments_cents": 0,
+      "charges_cents": 592600,
+      "patient_balance_cents": 592600,
+      "payments_cents": 0
+    }
+  },
+  "case_id": "multi_01_selfpay_nyp",
+  "category": "MULTI",
+  "eob": null,
+  "gfe": {
+    "date": "2026-09-11",
+    "total_cents": 547600
+  },
+  "household": null,
+  "layout": "bill_statement",
+  "patient": {
+    "email": "jessica.jackson28@example.net",
+    "name": "Jessica Jackson",
+    "state": "NY"
+  }
+}

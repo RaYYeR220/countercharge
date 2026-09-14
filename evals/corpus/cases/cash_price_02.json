@@ -1,0 +1,59 @@
+{
+  "adversarial_text": null,
+  "bill": {
+    "account_no": "NYP-2026-100023",
+    "lines": [
+      {
+        "charge_cents": 20000,
+        "code": "82310",
+        "code_type": "CPT",
+        "description": "Blood calcium test",
+        "dos": "2026-09-01",
+        "line_id": "L1",
+        "modifiers": [],
+        "rev_code": "0301",
+        "units": 1
+      },
+      {
+        "charge_cents": 200000,
+        "code": "99283",
+        "code_type": "CPT",
+        "description": "Emergency department visit, level 3",
+        "dos": "2026-09-01",
+        "line_id": "L2",
+        "modifiers": [],
+        "rev_code": "0450",
+        "units": 1
+      }
+    ],
+    "pos": null,
+    "provider": {
+      "billing_email_domain": "nyp.org",
+      "ein": "13-1000023",
+      "hospital_id": "nyp",
+      "name": "NewYork-Presbyterian Hospital",
+      "nonprofit": true,
+      "npi": "1800000023"
+    },
+    "self_pay": true,
+    "setting": "OUTPATIENT",
+    "statement_date": "2026-09-22",
+    "totals": {
+      "adjustments_cents": 0,
+      "charges_cents": 220000,
+      "patient_balance_cents": 220000,
+      "payments_cents": 0
+    }
+  },
+  "case_id": "cash_price_02",
+  "category": "CASH_PRICE",
+  "eob": null,
+  "gfe": null,
+  "household": null,
+  "layout": "bill_classic",
+  "patient": {
+    "email": "david.nguyen23@example.net",
+    "name": "David Nguyen",
+    "state": "NY"
+  }
+}

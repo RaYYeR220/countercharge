@@ -1,0 +1,75 @@
+{
+  "adversarial_text": null,
+  "bill": {
+    "account_no": "NYP-2026-100016",
+    "lines": [
+      {
+        "charge_cents": 240000,
+        "code": "99285",
+        "code_type": "CPT",
+        "description": "Emergency department visit, level 5",
+        "dos": "2026-08-04",
+        "line_id": "L1",
+        "modifiers": [],
+        "rev_code": "0450",
+        "units": 1
+      },
+      {
+        "charge_cents": 105000,
+        "code": "71046",
+        "code_type": "CPT",
+        "description": "Chest X-ray, two views",
+        "dos": "2026-08-04",
+        "line_id": "L2",
+        "modifiers": [],
+        "rev_code": "0320",
+        "units": 1
+      }
+    ],
+    "pos": null,
+    "provider": {
+      "billing_email_domain": "nyp.org",
+      "ein": "13-1000016",
+      "hospital_id": "nyp",
+      "name": "NewYork-Presbyterian Hospital",
+      "nonprofit": true,
+      "npi": "1800000016"
+    },
+    "self_pay": false,
+    "setting": "ER",
+    "statement_date": "2026-08-25",
+    "totals": {
+      "adjustments_cents": 0,
+      "charges_cents": 345000,
+      "patient_balance_cents": 345000,
+      "payments_cents": 0
+    }
+  },
+  "case_id": "nsa_emergency_01",
+  "category": "NSA_EMERGENCY",
+  "eob": {
+    "claim_no": "CLM-2001",
+    "emergency": true,
+    "lines": [
+      {
+        "allowed_cents": 180000,
+        "billed_cents": 240000,
+        "code": "99285",
+        "dos": "2026-08-04",
+        "patient_resp_cents": 180000,
+        "plan_paid_cents": 0
+      }
+    ],
+    "network": "OUT",
+    "payer": "Anthem BCBS",
+    "total_patient_resp_cents": 180000
+  },
+  "gfe": null,
+  "household": null,
+  "layout": "bill_statement",
+  "patient": {
+    "email": "linda.johnson16@example.net",
+    "name": "Linda Johnson",
+    "state": "NY"
+  }
+}

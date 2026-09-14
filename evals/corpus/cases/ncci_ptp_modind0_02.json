@@ -1,0 +1,70 @@
+{
+  "adversarial_text": null,
+  "bill": {
+    "account_no": "NYP-2026-100006",
+    "lines": [
+      {
+        "charge_cents": 105000,
+        "code": "71046",
+        "code_type": "CPT",
+        "description": "Chest X-ray, two views",
+        "dos": "2026-06-25",
+        "line_id": "L1",
+        "modifiers": [],
+        "rev_code": "0320",
+        "units": 1
+      },
+      {
+        "charge_cents": 116000,
+        "code": "12005",
+        "code_type": "CPT",
+        "description": "Wound repair, simple, extensive",
+        "dos": "2026-06-25",
+        "line_id": "L2",
+        "modifiers": [],
+        "rev_code": "0761",
+        "units": 1
+      },
+      {
+        "charge_cents": 95000,
+        "code": "12002",
+        "code_type": "CPT",
+        "description": "Wound repair, simple, medium",
+        "dos": "2026-06-25",
+        "line_id": "L3",
+        "modifiers": [],
+        "rev_code": "0761",
+        "units": 1
+      }
+    ],
+    "pos": null,
+    "provider": {
+      "billing_email_domain": "nyp.org",
+      "ein": "13-1000006",
+      "hospital_id": "nyp",
+      "name": "NewYork-Presbyterian Hospital",
+      "nonprofit": true,
+      "npi": "1800000006"
+    },
+    "self_pay": false,
+    "setting": "ER",
+    "statement_date": "2026-07-16",
+    "totals": {
+      "adjustments_cents": 0,
+      "charges_cents": 316000,
+      "patient_balance_cents": 316000,
+      "payments_cents": 0
+    }
+  },
+  "case_id": "ncci_ptp_modind0_02",
+  "category": "NCCI_PTP",
+  "eob": null,
+  "gfe": null,
+  "household": null,
+  "layout": "bill_modern",
+  "patient": {
+    "email": "sarah.brown6@example.net",
+    "name": "Sarah Brown",
+    "state": "NY"
+  }
+}

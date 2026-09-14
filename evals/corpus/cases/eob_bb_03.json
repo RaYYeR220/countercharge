@@ -1,0 +1,75 @@
+{
+  "adversarial_text": null,
+  "bill": {
+    "account_no": "CCF-2026-100015",
+    "lines": [
+      {
+        "charge_cents": 72000,
+        "code": "99283",
+        "code_type": "CPT",
+        "description": "Emergency department visit, level 3",
+        "dos": "2026-07-31",
+        "line_id": "L1",
+        "modifiers": [],
+        "rev_code": "0450",
+        "units": 1
+      },
+      {
+        "charge_cents": 35000,
+        "code": "87635",
+        "code_type": "CPT",
+        "description": "Respiratory virus lab test",
+        "dos": "2026-07-31",
+        "line_id": "L2",
+        "modifiers": [],
+        "rev_code": "0306",
+        "units": 1
+      }
+    ],
+    "pos": null,
+    "provider": {
+      "billing_email_domain": "clevelandclinic.org",
+      "ein": "13-1000015",
+      "hospital_id": "ccf",
+      "name": "Cleveland Clinic",
+      "nonprofit": true,
+      "npi": "1800000015"
+    },
+    "self_pay": false,
+    "setting": "OUTPATIENT",
+    "statement_date": "2026-08-21",
+    "totals": {
+      "adjustments_cents": 60000,
+      "charges_cents": 107000,
+      "patient_balance_cents": 20000,
+      "payments_cents": 27000
+    }
+  },
+  "case_id": "eob_bb_03",
+  "category": "EOB_BALANCE_BILLING",
+  "eob": {
+    "claim_no": "CLM-1003",
+    "emergency": false,
+    "lines": [
+      {
+        "allowed_cents": 32000,
+        "billed_cents": 72000,
+        "code": "99283",
+        "dos": "2026-07-31",
+        "patient_resp_cents": 12000,
+        "plan_paid_cents": 20000
+      }
+    ],
+    "network": "IN",
+    "payer": "Aetna",
+    "total_patient_resp_cents": 12000
+  },
+  "gfe": null,
+  "household": null,
+  "layout": "bill_modern",
+  "patient": {
+    "email": "james.robinson15@example.net",
+    "name": "James Robinson",
+    "state": "NY"
+  }
+}

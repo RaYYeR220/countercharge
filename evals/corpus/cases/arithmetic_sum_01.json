@@ -1,0 +1,59 @@
+{
+  "adversarial_text": null,
+  "bill": {
+    "account_no": "NYP-2026-100010",
+    "lines": [
+      {
+        "charge_cents": 185000,
+        "code": "99284",
+        "code_type": "CPT",
+        "description": "Emergency department visit, level 4",
+        "dos": "2026-07-11",
+        "line_id": "L1",
+        "modifiers": [],
+        "rev_code": "0450",
+        "units": 1
+      },
+      {
+        "charge_cents": 18000,
+        "code": "85025",
+        "code_type": "CPT",
+        "description": "Complete blood count with differential",
+        "dos": "2026-07-11",
+        "line_id": "L2",
+        "modifiers": [],
+        "rev_code": "0305",
+        "units": 1
+      }
+    ],
+    "pos": null,
+    "provider": {
+      "billing_email_domain": "nyp.org",
+      "ein": "13-1000010",
+      "hospital_id": "nyp",
+      "name": "NewYork-Presbyterian Hospital",
+      "nonprofit": true,
+      "npi": "1800000010"
+    },
+    "self_pay": false,
+    "setting": "ER",
+    "statement_date": "2026-08-01",
+    "totals": {
+      "adjustments_cents": 0,
+      "charges_cents": 228000,
+      "patient_balance_cents": 228000,
+      "payments_cents": 0
+    }
+  },
+  "case_id": "arithmetic_sum_01",
+  "category": "ARITHMETIC",
+  "eob": null,
+  "gfe": null,
+  "household": null,
+  "layout": "bill_statement",
+  "patient": {
+    "email": "nancy.miller10@example.net",
+    "name": "Nancy Miller",
+    "state": "NY"
+  }
+}

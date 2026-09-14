@@ -1,0 +1,95 @@
+{
+  "adversarial_text": null,
+  "bill": {
+    "account_no": "CCF-2026-100020",
+    "lines": [
+      {
+        "charge_cents": 185000,
+        "code": "99284",
+        "code_type": "CPT",
+        "description": "Emergency department visit, level 4",
+        "dos": "2026-08-20",
+        "line_id": "L1",
+        "modifiers": [],
+        "rev_code": "0450",
+        "units": 1
+      },
+      {
+        "charge_cents": 130000,
+        "code": "71100",
+        "code_type": "CPT",
+        "description": "Rib X-ray",
+        "dos": "2026-08-20",
+        "line_id": "L2",
+        "modifiers": [],
+        "rev_code": "0320",
+        "units": 1
+      },
+      {
+        "charge_cents": 180000,
+        "code": "85025",
+        "code_type": "CPT",
+        "description": "Complete blood count with differential",
+        "dos": "2026-08-20",
+        "line_id": "L3",
+        "modifiers": [],
+        "rev_code": "0305",
+        "units": 1
+      },
+      {
+        "charge_cents": 60000,
+        "code": "36415",
+        "code_type": "CPT",
+        "description": "Blood draw",
+        "dos": "2026-08-20",
+        "line_id": "L4",
+        "modifiers": [],
+        "rev_code": "0300",
+        "units": 1
+      },
+      {
+        "charge_cents": 95000,
+        "code": "A4550",
+        "code_type": "HCPCS",
+        "description": "Surgical trays",
+        "dos": "2026-08-20",
+        "line_id": "L5",
+        "modifiers": [],
+        "rev_code": "0270",
+        "units": 1
+      }
+    ],
+    "pos": null,
+    "provider": {
+      "billing_email_domain": "clevelandclinic.org",
+      "ein": "13-1000020",
+      "hospital_id": "ccf",
+      "name": "Cleveland Clinic",
+      "nonprofit": true,
+      "npi": "1800000020"
+    },
+    "self_pay": true,
+    "setting": "ER",
+    "statement_date": "2026-09-10",
+    "totals": {
+      "adjustments_cents": 0,
+      "charges_cents": 650000,
+      "patient_balance_cents": 650000,
+      "payments_cents": 0
+    }
+  },
+  "case_id": "nsa_gfe_02",
+  "category": "NSA_GFE",
+  "eob": null,
+  "gfe": {
+    "date": "2026-08-10",
+    "total_cents": 530000
+  },
+  "household": null,
+  "layout": "bill_classic",
+  "patient": {
+    "email": "barbara.kowalski20@example.net",
+    "name": "Barbara Kowalski",
+    "state": "NY"
+  }
+}

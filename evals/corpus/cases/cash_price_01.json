@@ -1,0 +1,59 @@
+{
+  "adversarial_text": null,
+  "bill": {
+    "account_no": "NYP-2026-100022",
+    "lines": [
+      {
+        "charge_cents": 150000,
+        "code": "71046",
+        "code_type": "CPT",
+        "description": "Chest X-ray, two views",
+        "dos": "2026-08-28",
+        "line_id": "L1",
+        "modifiers": [],
+        "rev_code": "0320",
+        "units": 1
+      },
+      {
+        "charge_cents": 200000,
+        "code": "99283",
+        "code_type": "CPT",
+        "description": "Emergency department visit, level 3",
+        "dos": "2026-08-28",
+        "line_id": "L2",
+        "modifiers": [],
+        "rev_code": "0450",
+        "units": 1
+      }
+    ],
+    "pos": null,
+    "provider": {
+      "billing_email_domain": "nyp.org",
+      "ein": "13-1000022",
+      "hospital_id": "nyp",
+      "name": "NewYork-Presbyterian Hospital",
+      "nonprofit": true,
+      "npi": "1800000022"
+    },
+    "self_pay": true,
+    "setting": "OUTPATIENT",
+    "statement_date": "2026-09-18",
+    "totals": {
+      "adjustments_cents": 0,
+      "charges_cents": 350000,
+      "patient_balance_cents": 350000,
+      "payments_cents": 0
+    }
+  },
+  "case_id": "cash_price_01",
+  "category": "CASH_PRICE",
+  "eob": null,
+  "gfe": null,
+  "household": null,
+  "layout": "bill_statement",
+  "patient": {
+    "email": "elizabeth.clark22@example.net",
+    "name": "Elizabeth Clark",
+    "state": "NY"
+  }
+}

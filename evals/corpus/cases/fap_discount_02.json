@@ -1,0 +1,63 @@
+{
+  "adversarial_text": null,
+  "bill": {
+    "account_no": "CCF-2026-100027",
+    "lines": [
+      {
+        "charge_cents": 72000,
+        "code": "99283",
+        "code_type": "CPT",
+        "description": "Emergency department visit, level 3",
+        "dos": "2026-09-17",
+        "line_id": "L1",
+        "modifiers": [],
+        "rev_code": "0450",
+        "units": 1
+      },
+      {
+        "charge_cents": 9500,
+        "code": "A4550",
+        "code_type": "HCPCS",
+        "description": "Surgical trays",
+        "dos": "2026-09-17",
+        "line_id": "L2",
+        "modifiers": [],
+        "rev_code": "0270",
+        "units": 1
+      }
+    ],
+    "pos": null,
+    "provider": {
+      "billing_email_domain": "clevelandclinic.org",
+      "ein": "13-1000027",
+      "hospital_id": "ccf",
+      "name": "Cleveland Clinic",
+      "nonprofit": true,
+      "npi": "1800000027"
+    },
+    "self_pay": true,
+    "setting": "ER",
+    "statement_date": "2026-10-08",
+    "totals": {
+      "adjustments_cents": 0,
+      "charges_cents": 81500,
+      "patient_balance_cents": 81500,
+      "payments_cents": 0
+    }
+  },
+  "case_id": "fap_discount_02",
+  "category": "FAP_501R",
+  "eob": null,
+  "gfe": null,
+  "household": {
+    "annual_income_cents": 10000000,
+    "size": 4,
+    "state": "OH"
+  },
+  "layout": "bill_modern",
+  "patient": {
+    "email": "joseph.garcia27@example.net",
+    "name": "Joseph Garcia",
+    "state": "OH"
+  }
+}

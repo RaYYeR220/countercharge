@@ -1,0 +1,75 @@
+{
+  "adversarial_text": null,
+  "bill": {
+    "account_no": "NYP-2026-100014",
+    "lines": [
+      {
+        "charge_cents": 105000,
+        "code": "71046",
+        "code_type": "CPT",
+        "description": "Chest X-ray, two views",
+        "dos": "2026-07-27",
+        "line_id": "L1",
+        "modifiers": [],
+        "rev_code": "0320",
+        "units": 1
+      },
+      {
+        "charge_cents": 18000,
+        "code": "85025",
+        "code_type": "CPT",
+        "description": "Complete blood count with differential",
+        "dos": "2026-07-27",
+        "line_id": "L2",
+        "modifiers": [],
+        "rev_code": "0305",
+        "units": 1
+      }
+    ],
+    "pos": null,
+    "provider": {
+      "billing_email_domain": "nyp.org",
+      "ein": "13-1000014",
+      "hospital_id": "nyp",
+      "name": "NewYork-Presbyterian Hospital",
+      "nonprofit": true,
+      "npi": "1800000014"
+    },
+    "self_pay": false,
+    "setting": "OUTPATIENT",
+    "statement_date": "2026-08-17",
+    "totals": {
+      "adjustments_cents": 70000,
+      "charges_cents": 123000,
+      "patient_balance_cents": 20000,
+      "payments_cents": 33000
+    }
+  },
+  "case_id": "eob_bb_02",
+  "category": "EOB_BALANCE_BILLING",
+  "eob": {
+    "claim_no": "CLM-1002",
+    "emergency": false,
+    "lines": [
+      {
+        "allowed_cents": 40000,
+        "billed_cents": 105000,
+        "code": "71046",
+        "dos": "2026-07-27",
+        "patient_resp_cents": 5000,
+        "plan_paid_cents": 35000
+      }
+    ],
+    "network": "IN",
+    "payer": "UnitedHealthcare",
+    "total_patient_resp_cents": 5000
+  },
+  "gfe": null,
+  "household": null,
+  "layout": "bill_classic",
+  "patient": {
+    "email": "maria.anderson14@example.net",
+    "name": "Maria Anderson",
+    "state": "NY"
+  }
+}

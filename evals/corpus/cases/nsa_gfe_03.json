@@ -1,0 +1,95 @@
+{
+  "adversarial_text": null,
+  "bill": {
+    "account_no": "CCF-2026-100021",
+    "lines": [
+      {
+        "charge_cents": 240000,
+        "code": "99285",
+        "code_type": "CPT",
+        "description": "Emergency department visit, level 5",
+        "dos": "2026-08-24",
+        "line_id": "L1",
+        "modifiers": [],
+        "rev_code": "0450",
+        "units": 1
+      },
+      {
+        "charge_cents": 140000,
+        "code": "72100",
+        "code_type": "CPT",
+        "description": "Lower spine X-ray",
+        "dos": "2026-08-24",
+        "line_id": "L2",
+        "modifiers": [],
+        "rev_code": "0320",
+        "units": 1
+      },
+      {
+        "charge_cents": 280000,
+        "code": "87635",
+        "code_type": "CPT",
+        "description": "Respiratory virus lab test",
+        "dos": "2026-08-24",
+        "line_id": "L3",
+        "modifiers": [],
+        "rev_code": "0306",
+        "units": 1
+      },
+      {
+        "charge_cents": 180000,
+        "code": "93005",
+        "code_type": "CPT",
+        "description": "EKG tracing",
+        "dos": "2026-08-24",
+        "line_id": "L4",
+        "modifiers": [],
+        "rev_code": "0730",
+        "units": 1
+      },
+      {
+        "charge_cents": 60000,
+        "code": "J2250",
+        "code_type": "HCPCS",
+        "description": "Inj midazolam hydrochloride",
+        "dos": "2026-08-24",
+        "line_id": "L5",
+        "modifiers": [],
+        "rev_code": "0636",
+        "units": 1
+      }
+    ],
+    "pos": null,
+    "provider": {
+      "billing_email_domain": "clevelandclinic.org",
+      "ein": "13-1000021",
+      "hospital_id": "ccf",
+      "name": "Cleveland Clinic",
+      "nonprofit": true,
+      "npi": "1800000021"
+    },
+    "self_pay": true,
+    "setting": "ER",
+    "statement_date": "2026-09-14",
+    "totals": {
+      "adjustments_cents": 0,
+      "charges_cents": 900000,
+      "patient_balance_cents": 900000,
+      "payments_cents": 0
+    }
+  },
+  "case_id": "nsa_gfe_03",
+  "category": "NSA_GFE",
+  "eob": null,
+  "gfe": {
+    "date": "2026-08-14",
+    "total_cents": 400000
+  },
+  "household": null,
+  "layout": "bill_modern",
+  "patient": {
+    "email": "william.thomas21@example.net",
+    "name": "William Thomas",
+    "state": "NY"
+  }
+}

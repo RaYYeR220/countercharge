@@ -1,0 +1,59 @@
+{
+  "adversarial_text": null,
+  "bill": {
+    "account_no": "NYP-2026-100007",
+    "lines": [
+      {
+        "charge_cents": 185000,
+        "code": "99284",
+        "code_type": "CPT",
+        "description": "Emergency department visit, level 4",
+        "dos": "2026-06-29",
+        "line_id": "L1",
+        "modifiers": [],
+        "rev_code": "0450",
+        "units": 1
+      },
+      {
+        "charge_cents": 420000,
+        "code": "A0425",
+        "code_type": "HCPCS",
+        "description": "Ground mileage",
+        "dos": "2026-06-29",
+        "line_id": "L2",
+        "modifiers": [],
+        "rev_code": "0540",
+        "units": 300
+      }
+    ],
+    "pos": null,
+    "provider": {
+      "billing_email_domain": "nyp.org",
+      "ein": "13-1000007",
+      "hospital_id": "nyp",
+      "name": "NewYork-Presbyterian Hospital",
+      "nonprofit": true,
+      "npi": "1800000007"
+    },
+    "self_pay": false,
+    "setting": "ER",
+    "statement_date": "2026-07-20",
+    "totals": {
+      "adjustments_cents": 0,
+      "charges_cents": 605000,
+      "patient_balance_cents": 605000,
+      "payments_cents": 0
+    }
+  },
+  "case_id": "mue_mai1_01",
+  "category": "MUE",
+  "eob": null,
+  "gfe": null,
+  "household": null,
+  "layout": "bill_statement",
+  "patient": {
+    "email": "charles.taylor7@example.net",
+    "name": "Charles Taylor",
+    "state": "NY"
+  }
+}

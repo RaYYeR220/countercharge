@@ -1,0 +1,70 @@
+{
+  "adversarial_text": null,
+  "bill": {
+    "account_no": "CCF-2026-100002",
+    "lines": [
+      {
+        "charge_cents": 105000,
+        "code": "71046",
+        "code_type": "CPT",
+        "description": "Chest X-ray, two views",
+        "dos": "2026-06-09",
+        "line_id": "L1",
+        "modifiers": [],
+        "rev_code": "0320",
+        "units": 1
+      },
+      {
+        "charge_cents": 21000,
+        "code": "82310",
+        "code_type": "CPT",
+        "description": "Blood calcium test",
+        "dos": "2026-06-09",
+        "line_id": "L2",
+        "modifiers": [],
+        "rev_code": "0301",
+        "units": 1
+      },
+      {
+        "charge_cents": 21000,
+        "code": "82310",
+        "code_type": "CPT",
+        "description": "Blood calcium test",
+        "dos": "2026-06-09",
+        "line_id": "L3",
+        "modifiers": [],
+        "rev_code": "0301",
+        "units": 1
+      }
+    ],
+    "pos": null,
+    "provider": {
+      "billing_email_domain": "clevelandclinic.org",
+      "ein": "13-1000002",
+      "hospital_id": "ccf",
+      "name": "Cleveland Clinic",
+      "nonprofit": true,
+      "npi": "1800000002"
+    },
+    "self_pay": false,
+    "setting": "OUTPATIENT",
+    "statement_date": "2026-06-30",
+    "totals": {
+      "adjustments_cents": 0,
+      "charges_cents": 147000,
+      "patient_balance_cents": 147000,
+      "payments_cents": 0
+    }
+  },
+  "case_id": "duplicate_02",
+  "category": "DUPLICATE",
+  "eob": null,
+  "gfe": null,
+  "household": null,
+  "layout": "bill_classic",
+  "patient": {
+    "email": "susan.alvarez2@example.net",
+    "name": "Susan Alvarez",
+    "state": "NY"
+  }
+}
