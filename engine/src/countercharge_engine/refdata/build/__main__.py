@@ -30,7 +30,7 @@ from countercharge_engine.refdata.build.fpl import YEAR as FPL_YEAR
 from countercharge_engine.refdata.build.hcpcs import parse_hcpcs2_file
 from countercharge_engine.refdata.build.mrf import parse_mrf_file
 from countercharge_engine.refdata.build.mue import parse_mue_file
-from countercharge_engine.refdata.build.ncci import parse_ptp_files
+from countercharge_engine.refdata.build.ncci import keep_ptp_edit, parse_ptp_files
 from countercharge_engine.refdata.build.rates import parse_rates_file
 from countercharge_engine.refdata.build.sources import Source
 from countercharge_engine.refdata.sqlite import SCHEMA_SQL
@@ -42,7 +42,9 @@ RAW_DIR = DATA_DIR / "raw"
 # NCCI edits deleted well in the past are irrelevant to a bill audit and make
 # up the bulk of the raw PTP row count; dropping them keeps refdata.sqlite a
 # reasonable size. Anything still active, or deleted recently enough that a
-# 2024+ date of service could still fall under it, is kept.
+# 2024+ date of service could still fall under it, is kept. See
+# "NCCI PTP deletion cutoff" in engine/data/REFDATA.md for the full
+# rationale and its (conservative-only) correctness implication.
 _PTP_DELETION_CUTOFF = date(2024, 1, 1)
 
 
@@ -130,7 +132,7 @@ def _ingest_ptp(
             e.rationale,
         )
         for e in parse_ptp_files(txt_paths)
-        if e.deleted is None or e.deleted >= _PTP_DELETION_CUTOFF
+        if keep_ptp_edit(e, _PTP_DELETION_CUTOFF)
     )
     conn.executemany(
         "INSERT INTO ptp (tbl, col1, col2, modifier_ind, effective, deleted, rationale) "

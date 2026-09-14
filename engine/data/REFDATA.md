@@ -15,3 +15,29 @@ Built by `countercharge_engine.refdata.build`. Each row below is one dataset bak
 | HPT-nyp | NewYork-Presbyterian standardcharges.json v3.0.0 (last_updated_on 2026-03-31) | https://www.nyp.org/patients-visitors/paying-for-care/hospital-price-transparency/standard-charges | 58 | 2026-09-14 |
 | FAP-nyp | policy retrieved 2026-09-14 | https://www.nyp.org/billing/charity-care | 1 | 2026-09-14 |
 | FAP-ccf | policy retrieved 2026-09-14 | https://my.clevelandclinic.org/-/scassets/files/org/patients-visitors/billing/financial-assistance/7-financial-assistance-program-policy.pdf | 1 | 2026-09-14 |
+
+## Notes
+
+### NCCI PTP deletion cutoff (2024-01-01)
+
+The raw NCCI PTP practitioner and hospital/OPPS releases each carry well
+over a decade of edit history, and the large majority of that history is
+edits deleted long ago that no current or plausible-future date of service
+could ever fall under. Keeping every historical row would multiply
+`refdata.sqlite`'s size several times over for rows that can never match a
+real audit. The builder (`refdata/build/__main__.py`, `_PTP_DELETION_CUTOFF`,
+enforced via `refdata/build/ncci.py`'s `keep_ptp_edit`) drops a PTP edit row
+only if it was deleted *before* 2024-01-01; a still-active edit
+(`deleted is None`) is always kept, and an edit deleted on or after the
+cutoff is kept in full (its `effective`/`deleted` window is preserved
+as-is, not truncated).
+
+**Correctness implication:** `ptp_edit()` looks up the edit active on a
+bill's exact date of service. If a bill's date of service falls inside an
+edit window that was superseded (deleted) before 2024-01-01, that row isn't
+in the database and the lookup silently returns `None` -- a missed true
+positive, never a false one. This is a size/coverage trade-off for dates of
+service more than roughly two years old as of any given build; it never
+causes an overclaim, only a conservative gap for older claims. See
+`tests/test_build_parsers.py`'s `test_keep_ptp_edit_*` cases for the exact
+boundary behavior (deleted 2023-12-31 dropped, deleted 2024-01-01 kept).

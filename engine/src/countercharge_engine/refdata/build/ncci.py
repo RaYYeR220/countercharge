@@ -71,3 +71,14 @@ def parse_ptp_files(paths: Iterable[Path]) -> Iterator[PtpEdit]:
     """Yield PTP edits across every part of a (possibly multi-file) release."""
     for path in paths:
         yield from parse_ptp_file(path)
+
+
+def keep_ptp_edit(edit: PtpEdit, cutoff: date) -> bool:
+    """Whether ``edit`` is worth keeping under the builder's deletion cutoff.
+
+    An edit still active (``deleted is None``) is always kept. A deleted
+    edit is kept only if it was deleted on or after ``cutoff`` -- old enough
+    that it could still govern a date of service after the cutoff. See
+    ``engine/data/REFDATA.md`` for why this cutoff exists and what it costs.
+    """
+    return edit.deleted is None or edit.deleted >= cutoff

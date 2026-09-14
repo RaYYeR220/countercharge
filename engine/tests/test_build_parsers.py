@@ -11,8 +11,9 @@ from countercharge_engine.refdata.build.fpl import YEAR as FPL_YEAR
 from countercharge_engine.refdata.build.hcpcs import parse_hcpcs2_file
 from countercharge_engine.refdata.build.mrf import parse_mrf_file
 from countercharge_engine.refdata.build.mue import parse_mue_file
-from countercharge_engine.refdata.build.ncci import parse_ptp_file, parse_ptp_files
+from countercharge_engine.refdata.build.ncci import keep_ptp_edit, parse_ptp_file, parse_ptp_files
 from countercharge_engine.refdata.build.rates import parse_rates_file
+from countercharge_engine.refdata.base import PtpEdit
 
 FIXTURES = Path(__file__).parent / "fixtures" / "cms"
 
@@ -52,6 +53,36 @@ def test_parse_ptp_file_ind0_row():
 def test_parse_ptp_files_chains_multiple_parts():
     edits = list(parse_ptp_files([FIXTURES / "ptp_sample.txt", FIXTURES / "ptp_sample.txt"]))
     assert len(edits) == 8
+
+
+# --------------------------------------------------------------------------
+# NCCI PTP deletion cutoff (see REFDATA.md for why this cutoff exists)
+# --------------------------------------------------------------------------
+
+_CUTOFF = date(2024, 1, 1)
+
+
+def _edit(deleted):
+    return PtpEdit(
+        col1="99285",
+        col2="36415",
+        modifier_ind=0,
+        effective=date(2020, 1, 1),
+        deleted=deleted,
+        rationale="standards of medical/surgical practice",
+    )
+
+
+def test_keep_ptp_edit_active_edit_always_kept():
+    assert keep_ptp_edit(_edit(deleted=None), _CUTOFF) is True
+
+
+def test_keep_ptp_edit_deleted_before_cutoff_is_dropped():
+    assert keep_ptp_edit(_edit(deleted=date(2023, 12, 31)), _CUTOFF) is False
+
+
+def test_keep_ptp_edit_deleted_exactly_on_cutoff_is_kept():
+    assert keep_ptp_edit(_edit(deleted=date(2024, 1, 1)), _CUTOFF) is True
 
 
 # --------------------------------------------------------------------------
