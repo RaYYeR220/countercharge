@@ -47,6 +47,47 @@ def test_memory_fpl_maps_non_ak_hi_states_to_48():
     assert refdata.fpl_base(2026, "AK") == (1994000, 710000)
 
 
+def test_memory_ptp_table_scoped_edits_filter_by_table():
+    opps_only = _edit(effective=date(2026, 1, 1))
+    refdata = MemoryRefData(ptp_opps=[opps_only])
+
+    assert refdata.ptp_edit("99285", "36415", "opps", date(2026, 3, 1)) == opps_only
+    assert refdata.ptp_edit("99285", "36415", "prac", date(2026, 3, 1)) is None
+
+
+def test_memory_ptp_all_tables_edit_applies_to_every_table():
+    edit = _edit(effective=date(2026, 1, 1))
+    refdata = MemoryRefData(ptp=[edit])
+
+    assert refdata.ptp_edit("99285", "36415", "opps", date(2026, 3, 1)) == edit
+    assert refdata.ptp_edit("99285", "36415", "prac", date(2026, 3, 1)) == edit
+
+
+def test_memory_mue_table_scoped_edits_filter_by_table():
+    dme_only = MueEdit(code="E0424", mue_value=1, mai=2, rationale="one per episode")
+    refdata = MemoryRefData(mue_dme=[dme_only])
+
+    assert refdata.mue("E0424", "dme") == dme_only
+    assert refdata.mue("E0424", "prac") is None
+    assert refdata.mue("E0424", "opps") is None
+
+
+def test_memory_mue_all_tables_edit_applies_to_every_table():
+    edit = MueEdit(code="85025", mue_value=1, mai=3, rationale="medically unlikely")
+    refdata = MemoryRefData(mue=[edit])
+
+    assert refdata.mue("85025", "prac") == edit
+    assert refdata.mue("85025", "opps") == edit
+    assert refdata.mue("85025", "dme") == edit
+
+
+def test_memory_hcpcs2_desc_seeded_from_dict():
+    refdata = MemoryRefData(hcpcs2={"J1885": "Ketorolac tromethamine inj"})
+
+    assert refdata.hcpcs2_desc("J1885") == "Ketorolac tromethamine inj"
+    assert refdata.hcpcs2_desc("00000") is None
+
+
 def test_sqlite_refdata_schema_round_trip(tmp_path: Path):
     db_path = tmp_path / "refdata.sqlite"
     conn = sqlite3.connect(db_path)
